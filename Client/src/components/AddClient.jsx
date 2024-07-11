@@ -16,7 +16,7 @@ const AddClient = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/clientes/nuevoCliente",
+        "http://localhost:3001/cliente/nuevoCliente",
         data
       );
       console.log("Cliente creado con exito", response.data);

@@ -1,10 +1,10 @@
-const { Pagos, Usuarios } = require("../../db");
+const { Pagos, Usuarios, Membresias } = require("../../db");
 const moment = require("moment");
 
 const putPago = async (req) => {
   try {
     const { idPago } = req.params;
-    const { fechaDePago, cuota, monto, estadoPago, metodoPago } = req.body;
+    const { fechaDePago, monto, estadoPago, metodoPago } = req.body;
 
     const pago = await Pagos.findByPk(idPago);
     if (!pago) {
@@ -12,18 +12,17 @@ const putPago = async (req) => {
     }
 
 // Obtengo el idUsuario del pago existente
-const idUsuario = pago.idUsuario;
+const {idUsuario, idMembresia}= pago;
 
 
     // Actualizar los campos del pago
     if (fechaDePago) pago.fechaDePago = fechaDePago;
-    if (cuota) pago.cuota = cuota;
     if (monto) pago.monto = monto;
     if (estadoPago) pago.estadoPago = estadoPago;
     if (metodoPago) pago.metodoPago = metodoPago;
 
     // Calcular la fecha de vencimiento si se actualizan fechaDePago y cuota
-    if (fechaDePago && cuota) {
+    if (fechaDePago) {
       // Crear la fecha de pago con la hora actual en la zona horaria de Argentina
       const fechaPagoDate = moment.tz(
         fechaDePago + " " + moment().format("HH:mm:ss"),
@@ -35,24 +34,17 @@ const idUsuario = pago.idUsuario;
       }
       console.log("Fecha Pago Zoned:", fechaPagoDate.format());
 
-      // Calcular la fecha de vencimiento
-      let fechaDeVencimiento;
-      switch (cuota) {
-        case "3 meses":
-          fechaDeVencimiento = fechaPagoDate.clone().add(3, "months");
-          break;
-        case "mes":
-          fechaDeVencimiento = fechaPagoDate.clone().add(1, "month");
-          break;
-        case "semana":
-          fechaDeVencimiento = fechaPagoDate.clone().add(7, "days");
-          break;
-        case "dia":
-          fechaDeVencimiento = fechaPagoDate.clone().add(1, "day");
-          break;
-        default:
-          throw new Error("Tipo de cuota desconocido");
+      
+      // Obtengo la membresía para calcular la fecha de vencimiento
+      const membresia = await Membresias.findByPk(idMembresia);
+      if (!membresia) {
+        throw new Error("Membresia no encontrada");
       }
+
+       // Calcular la fecha de vencimiento usando la duración de la membresía
+       const fechaDeVencimiento = fechaPagoDate
+       .clone()
+       .add(membresia.duracion, "days");
 
       // Convertir a UTC antes de actualizar en la base de datos
       const fechaPagoUtc = fechaPagoDate.clone().utc().format();

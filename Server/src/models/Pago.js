@@ -28,19 +28,19 @@ module.exports = (sequelize) => {
 
      
       },
+      idMembresia:{
+        type: DataTypes.INTEGER,
+        allowNull:false,
+        references:{
+          model:"Membresias",
+          key:"id"
+        },
+      },
 
       fechaDePago: {
         type: DataTypes.DATE,
         allowNull: false,
       },
-
-      cuota: {
-        type: DataTypes.ENUM,
-        values: ["3 meses", "mes","semana", "dia"],
-        allowNull: false,
-      },
-
-      
 
       monto: {
         type: DataTypes.FLOAT,

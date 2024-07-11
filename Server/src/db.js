@@ -39,12 +39,17 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 
-const { Usuarios, Pagos  } = sequelize.models;
+const { Usuarios, Pagos ,Membresias  } = sequelize.models;
 
 // Aca vendrian las relaciones
 
 Usuarios.hasMany(Pagos, { foreignKey: 'idUsuario' }); // Un usuario puede tener varios pagos asociados
 Pagos.belongsTo(Usuarios, { foreignKey: 'idUsuario', as: 'usuario' }); // Cada pago está asociado a un solo usuario
+
+Membresias.hasMany(Pagos, {foreignKey:'idPago'}) // Una membresia puede tener varios pagos asociados
+Pagos.belongsTo(Membresias, {foreignKey:'idMembresia' , as:'membresia'}) // Cada pago esta asociado a una sola membresia
+
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

@@ -6,6 +6,7 @@
 const express = require('express');
 const { conn } = require('./src/db'); // Importar la conexión a la base de datos desde db.js
 const server = require('./src/server'); // Importar el servidor Express desde server.js
+ require("./src/estadoMembresia/tareaProgramada")
 
 require ('dotenv').config() // Cargar variables de entorno desde .env
 
