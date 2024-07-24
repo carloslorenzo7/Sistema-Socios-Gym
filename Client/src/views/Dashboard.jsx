@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import ClientList from "../components/ClientList";
 import CLientDetail from "./ClientDetail";
@@ -21,6 +22,10 @@ const Dashboard = () => {
   const handleInputChange = (e) => {
     setNombre(e.target.value);
   };
+// useLocation para que aparezca la search bar solo en busqueda de cliente 
+  const location=useLocation()
+
+  const showSearchBar = location.pathname === "/dashboard/clientes"
 
   return (
     <div className="flex h-screen">
@@ -30,8 +35,9 @@ const Dashboard = () => {
           {isOpen ? '✕' : '☰'}
         </button>
         <div className="text-2xl">Mi Dashboard</div>
-      </div>
-
+    
+      
+    </div>
       {/* Sidebar */}
       <div
         className={`bg-blue-900 text-white ${
@@ -39,13 +45,15 @@ const Dashboard = () => {
         } transition-all duration-300`}
       >
         <nav className="flex flex-col pt-24 space-y-4">
+
+          {/* search bar en barra lateral pausada
           <input
             className="text-black"
             type="text"
             value={nombre}
             onChange={handleInputChange}
             placeholder="Buscar cliente"
-          />
+          /> */}
 
           <Link
             to="/dashboard/clientes"
@@ -81,6 +89,24 @@ const Dashboard = () => {
           isOpen ? "ml-0" : ""
         } transition-all duration-300`}
       >
+
+
+
+        {/* Barra de búsqueda  de preba para ver que tal queda */}
+        {showSearchBar && (
+
+          <div className="mb-4">
+          <input
+            className="text-black w-full px-3 py-2 border border-gray-300 rounded-md"
+            type="text"
+            value={nombre}
+            onChange={handleInputChange}
+            placeholder="Buscar cliente"
+            />
+        </div>
+
+          )}
+
         {nombre ? (
           <SearchClientName nombre={nombre} />
         ) : (
