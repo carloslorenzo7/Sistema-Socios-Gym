@@ -34,7 +34,7 @@ const Dashboard = () => {
         <button className="focus:outline-none" onClick={toggleSidebar}>
           {isOpen ? '✕' : '☰'}
         </button>
-        <div className="text-2xl">Mi Dashboard</div>
+        <div className="text-2xl">Sistema de Registro</div>
     
       
     </div>

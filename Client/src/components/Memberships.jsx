@@ -59,7 +59,7 @@ const Memberships = () => {
 
   return (
     <div className="">
-      <p className="text-xl font-semibold">Membresias</p>
+      <p className="text-xl font-semibold mb-8 text-center">Membresias</p>
       {/* boton agregar */}
       <button
         className="bg-blue-600 px-5 py-5 text-white rounded-full bottom-8 right-10 flex items-center justify-center fixed"
@@ -86,30 +86,37 @@ const Memberships = () => {
       {membresias.length === 0 ? (
         <div>No hay membresias disponibles</div>
       ) : (
-         <div className="overflow-x-auto">
+        <div className="overflow-x-auto bg-gray-400 rounded-md">
           <table>
             <thead>
-              <tr className="bg-gray-500 uppercase text-sm leading-normal">
-                <th className="py-3 px-6 text-left">Nombre</th>
+              <tr className="uppercase text-sm leading-normal">
+                <th className="py-3 px-6 text-left">Plan</th>
                 <th className="py-3 px-6 text-left">Descripcion</th>
                 <th className="py-3 px-6 text-left">Duracion</th>
-                <th className="py-3 px-6 text-left">Precio</th>
-                <th className="py-3 px-14 text-left">Acciones</th>
+                <th className="py-3 px-7 text-left">Precio</th>
+                <th className="py-3 px-14 text-left">Editar</th>
+                <th className="py-3 px-6 text-left">Eliminar</th>
               </tr>
             </thead>
-            <tbody className="text-gray-800 text-sm font-light">
+            <tbody className="text-gray-800 bg-white text-sm font-normal">
               {membresias.map((membresia) => (
-                <tr key={membresia.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="py-3 px-6 text-left"> {membresia.nombre} </td>
-                  <td className="py-3 px-6 text-left"> {membresia.descripcion} </td>
-                  <td className="py-3 px-10 text-left"> {membresia.duracion} </td>
+                <tr key={membresia.id} className="border-b border-gray-200">
+                  <td className="py-3 px-4 text-left"> {membresia.nombre} </td>
+                  <td className="py-3 px-6 text-left">
+                    {" "}
+                    {membresia.descripcion}{" "}
+                  </td>
+                  <td className="py-3 px-12 text-left">
+                    {" "}
+                    {membresia.duracion}{" "}
+                  </td>
                   <td className="py-3 px-8 text-left"> {membresia.precio} </td>
 
-                  <td className="py-3 px-8 text-left">
+                  <td className="py-3 px-10 text-left">
                     <div>
                       {/* boton editar */}
                       <button
-                        className=" text-blue-600 px-6"
+                        className=" text-blue-900 px-6"
                         onClick={() => handleEdit(membresia)}
                       >
                         <svg
@@ -121,7 +128,10 @@ const Memberships = () => {
                           <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
                         </svg>
                       </button>
-
+                    </div>
+                  </td>
+                  <td className="py-3 px-8 text-left">
+                    <div>
                       {/* boton eliminar */}
                       <button
                         className="text-red-600 px-2 "

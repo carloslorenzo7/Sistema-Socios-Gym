@@ -46,7 +46,7 @@ const { Usuarios, Pagos ,Membresias  } = sequelize.models;
 Usuarios.hasMany(Pagos, { foreignKey: 'idUsuario' }); // Un usuario puede tener varios pagos asociados
 Pagos.belongsTo(Usuarios, { foreignKey: 'idUsuario', as: 'usuario' }); // Cada pago está asociado a un solo usuario
 
-Membresias.hasMany(Pagos, {foreignKey:'idPago'}) // Una membresia puede tener varios pagos asociados
+Membresias.hasMany(Pagos, {foreignKey:'idMembresia'}) // Una membresia puede tener varios pagos asociados
 Pagos.belongsTo(Membresias, {foreignKey:'idMembresia' , as:'membresia'}) // Cada pago esta asociado a una sola membresia
 
 

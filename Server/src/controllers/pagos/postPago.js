@@ -32,9 +32,13 @@ const postPago = async (req) => {
     }
 
     // Calcular la fecha de vencimiento usando la duración de la membresía
-    const fechaDeVencimiento = fechaPagoDate
-      .clone()
-      .add(membresia.duracion, "days");
+    const fechaDeVencimiento = fechaPagoDate.clone().add(1, 'months');
+
+    // opcion 2 - con fallas postea 2 dias de menos
+    // const fechaDeVencimiento = fechaPagoDate
+    //   .clone()
+    //   .add(membresia.duracion, "days");
+
 
     // Convertir a UTC antes de guardar en la base de datos
     const fechaPagoUtc = fechaPagoDate.clone().utc().format();
@@ -53,14 +57,14 @@ const postPago = async (req) => {
       metodoPago,
       estadoPago,
     });
-
+    console.log("Nuevo pago:", nuevoPago);
     // actualizacion del estado de membresia
     const usuario = await Usuarios.findByPk(idUsuario);
     if (usuario) {
-      console.log("Usuario antes de la actualización:", usuario);
+      
       usuario.estado = estadoPago === "pagado" ? "activo" : "sin membresia";
-      await usuario.save();
       console.log("Usuario después de la actualización:", usuario);
+      await usuario.save();
     }
 
     return {

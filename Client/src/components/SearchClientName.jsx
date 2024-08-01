@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const SearchClientName = ({ nombre }) => {
   const [client, setClient] = useState([]); // donde vamos a obtener datos recibidos de api
@@ -34,9 +35,11 @@ const SearchClientName = ({ nombre }) => {
       {client.length > 0
         ? client.map((c) => (
             <div key={c.id}>
+              <Link to={`/dashboard/cliente/${c.id}`}>
               <p>{c.nombre}</p>
-              <p>{c.mail}</p>
+              <p>{c.email}</p>
               <p>{c.dni}</p>
+              </Link>
             </div>
           ))
         : !error && <p>No se encontraron clientes</p>}

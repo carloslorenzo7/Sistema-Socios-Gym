@@ -47,7 +47,9 @@ const CLientDetail = () => {
 
       <p>Nombre: {client.nombre}</p>
        <p>Email:{client.email} </p>
-       <p>Dni:{client.dni}</p>
+       <p>Dni:{client.dni}</p> 
+       <p>Estado:{client.estado}</p>
+       
 
        {client.Pagos.map(pago=>(
         <li key={pago.id}>

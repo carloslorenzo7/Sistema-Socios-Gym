@@ -58,10 +58,10 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="p-4 flex justify-center items-center">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 " >
         <div>
-          <label>Nombre</label>
+          <label className="block text-gray-700 mb-1">Couta</label>
           <input
             type="text"
             {...register("nombre", {
@@ -70,11 +70,13 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
                 message: "El nombre es obligatorio",
               },
             })}
+              className="border border-gray-800 py-2 px-4 rounded w-full focus:border-blue-500 focus:outline-none text-center"
+            
           />
-          {errors.nombre && <span>{errors.nombre.message}</span>}
+          {errors.nombre && <span className="text-red-500">{errors.nombre.message}</span>}
         </div>
         <div>
-          <label>Descripcion</label>
+          <label  className="block text-gray-700 mb-1">Descripcion:</label>
           <input
             type="text"
             {...register("descripcion", {
@@ -83,11 +85,12 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
                 message: "La descripcion es obligatoria",
               },
             })}
+            className="border border-gray-800 py-2 px-4 rounded w-full focus:border-blue-500 focus:outline-none text-center"
           />
-          {errors.descripcion && <span>{errors.descripcion.message}</span>}
+          {errors.descripcion && <span className="text-red-500">{errors.descripcion.message}</span>}
         </div>
         <div>
-          <label>Duracion</label>
+          <label  className="block text-gray-700 mb-1">Duracion:</label>
           <input
             type="number"
             {...register("duracion", {
@@ -96,11 +99,12 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
                 message: "La duracion es obligatoria",
               },
             })}
+            className="border border-gray-800 py-2 px-4 rounded w-full focus:border-blue-500 focus:outline-none text-center"
           />
-          {errors.duracion && <span>{errors.duracion.message}</span>}
+          {errors.duracion && <span className="text-red-500">{errors.duracion.message}</span>}
         </div>
         <div>
-          <label>Precio</label>
+          <label  className="block text-gray-700 mb-1">Precio:</label>
           <input
             type="number"
             {...register("precio", {
@@ -113,12 +117,13 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
                 message: "La duración debe ser al menos 1",
               }
             })}
+          className="border border-gray-800 py-2 px-4 rounded w-full focus:border-blue-500 focus:outline-none text-center"
           />
-          {errors.precio && <span>{errors.precio.message}</span>}
+          {errors.precio && <span className="text-red-500">{errors.precio.message}</span>}
         </div>
-        <div className="flex justify-end px-3">
-          <button type="submit" className="pr-5">Guardar</button>
-          <button type="button" onClick={onClose} className="">Cerrar</button>
+        <div className="flex justify-center space-x-4">
+          <button type="submit" className="px-2 font-medium text-sky-600 hover:bg-sky-700 hover:text-white rounded text-center ">Guardar</button>
+          <button type="button" onClick={onClose} className="px-2 font-medium text-sky-600 hover:bg-sky-700 hover:text-white rounded text-center">Cerrar</button>
         </div>
       </form>
     </div>

@@ -6,7 +6,7 @@ const deleteMembresiasHndls= async(req,res) =>{
         const membresia= await deleteMembresias(req);
         res.status(200).json(membresia)
     } catch (error) {
-        res.stattus(500).json({error:messsage.error})
+        res.status(500).json({error:error.message})
     }
 };
 
