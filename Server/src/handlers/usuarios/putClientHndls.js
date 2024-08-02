@@ -1,17 +1,17 @@
-const putClient= require("../../controllers/usuarios/putClient");
+const putClient = require("../../controllers/usuarios/putClient");
 
+const putClientHndls = async (req, res) => {
+  try {
+    const result = await putClient(req);
 
-const putClientHndls= async (req,res) =>{
-    try {
-        
-        const user= await putClient(req);
-
-        return res.status(200).json(user)
-
-
-    } catch (error) {
-        res.status(500).json({ message: error.message })
+    if (result.error) {
+      return res.status(404).json({ message: result.error });
     }
-}
 
-module.exports= putClientHndls;
+    return res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = putClientHndls;

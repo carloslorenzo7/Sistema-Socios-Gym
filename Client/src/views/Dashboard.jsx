@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Routes, Route } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, Routes, Route, useLocation } from "react-router-dom";
 
 import ClientList from "../components/ClientList";
-import CLientDetail from "./ClientDetail";
+import ClientDetail from "./ClientDetail"; // Corrigido el nombre
 import AddClient from "../components/AddClient";
 import Payment from "../components/Payment";
 import SearchClientName from "../components/SearchClientName";
@@ -12,20 +10,18 @@ import Memberships from "../components/Memberships";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [nombre, setNombre] = useState(""); // donde se va a almacenar el valor de la busuqeda
+  const [nombre, setNombre] = useState("");
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  //handler de la search bar
   const handleInputChange = (e) => {
     setNombre(e.target.value);
   };
-// useLocation para que aparezca la search bar solo en busqueda de cliente 
-  const location=useLocation()
 
-  const showSearchBar = location.pathname === "/dashboard/clientes"
+  const location = useLocation();
+  const showSearchBar = location.pathname === "/dashboard/clientes";
 
   return (
     <div className="flex h-screen">
@@ -34,93 +30,63 @@ const Dashboard = () => {
         <button className="focus:outline-none" onClick={toggleSidebar}>
           {isOpen ? '✕' : '☰'}
         </button>
-        <div className="text-2xl">Sistema de Registro</div>
-    
-      
-    </div>
+        <div className="text-2xl font-semibold">Sistema de Registro</div>
+      </div>
+
       {/* Sidebar */}
-      <div
-        className={`bg-blue-900 text-white ${
-          isOpen ? "w-64" : "hidden"
-        } transition-all duration-300`}
-      >
-        <nav className="flex flex-col pt-24 space-y-4">
-
-          {/* search bar en barra lateral pausada
-          <input
-            className="text-black"
-            type="text"
-            value={nombre}
-            onChange={handleInputChange}
-            placeholder="Buscar cliente"
-          /> */}
-
+      <div className={`bg-blue-900 text-white ${isOpen ? "w-64" : "hidden"} transition-all duration-300 pt-16 fixed h-full z-10`}>
+        <nav className="flex flex-col space-y-4 p-4">
           <Link
             to="/dashboard/clientes"
-            className="block p-3  rounded text-white hover:bg-gray-700"
+            className="block p-3 rounded text-white hover:bg-gray-700 transition duration-300"
           >
             Clientes
           </Link>
-
           <Link
             to="/dashboard/cliente/nuevoCliente"
-            className="block p-3  rounded text-white hover:bg-gray-700"
+            className="block p-3 rounded text-white hover:bg-gray-700 transition duration-300"
           >
             Nuevo Cliente
           </Link>
-
           <Link
             to="/dashboard/clientes/pago"
-            className="block p-3  rounded text-white hover:bg-gray-700"
+            className="block p-3 rounded text-white hover:bg-gray-700 transition duration-300"
           >
             Nuevo Pago
           </Link>
-
-
-          <Link to= "/dashboard/membresias"
-           className="block p-3  rounded text-white hover:bg-gray-700"
-                      > Membresias
+          <Link
+            to="/dashboard/membresias"
+            className="block p-3 rounded text-white hover:bg-gray-700 transition duration-300"
+          >
+            Membresías
           </Link>
         </nav>
       </div>
+
       {/* Vista Central */}
-      <div
-        className={`flex-1 p-20 bg-gray-100 ${
-          isOpen ? "ml-0" : ""
-        } transition-all duration-300`}
-      >
-
-
-
-        {/* Barra de búsqueda  de preba para ver que tal queda */}
+      <div className={`flex-1 p-20 bg-gray-100 ${isOpen ? "ml-64" : "ml-0"} transition-all duration-300 pt-16`}>
         {showSearchBar && (
-
           <div className="mb-4">
-          <input
-            className="text-black w-full px-3 py-2 border border-gray-300 rounded-md"
-            type="text"
-            value={nombre}
-            onChange={handleInputChange}
-            placeholder="Buscar cliente"
+            <input
+              className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="text"
+              value={nombre}
+              onChange={handleInputChange}
+              placeholder="Buscar cliente"
             />
-        </div>
-
-          )}
+          </div>
+        )}
 
         {nombre ? (
           <SearchClientName nombre={nombre} />
         ) : (
           <Routes>
             <Route path="/clientes" exact Component={ClientList} />
-            <Route path="/cliente/:id" exact Component={CLientDetail} />
+            <Route path="/cliente/:id" exact Component={ClientDetail} />
             <Route path="/cliente/nuevoCliente" exact Component={AddClient} />
             <Route path="/clientes/pago" exact Component={Payment} />
-            <Route
-              path="/cliente/nombre"
-              exact
-              Component={() => <SearchClientName nombre={nombre} />}
-            />
-            <Route path="/membresias" exact Component={Memberships}/>
+            <Route path="/cliente/nombre" exact Component={() => <SearchClientName nombre={nombre} />} />
+            <Route path="/membresias" exact Component={Memberships} />
           </Routes>
         )}
       </div>
