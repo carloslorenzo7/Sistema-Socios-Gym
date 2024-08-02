@@ -2,6 +2,9 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
+import { FaUser, FaInfoCircle, FaCalendarAlt, FaDollarSign } from "react-icons/fa";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const MembershipForm = ({ membership, onSave, onClose }) => {
   const {
@@ -11,7 +14,6 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
     formState: { errors },
   } = useForm();
 
-  // use effect para que cuando haga click en una membresia tenga un cargado de los datos de esa membresia
   useEffect(() => {
     if (membership) {
       setValue("nombre", membership.nombre);
@@ -22,22 +24,20 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
   }, [membership, setValue]);
 
   const onSubmit = async (data) => {
-    console.log(data);
-
     if (membership) {
       try {
         const response = await axios.put(
           `http://localhost:3001/modificarMembresia/${membership.id}`,
           data
         );
-        console.log("Membresia actulizada correctamente", response.data);
+        toast.success("Membresía actualizada correctamente");
         onSave();
       } catch (error) {
+        toast.error("Error al modificar membresía");
         console.error(
-          "Error al modificar membresia",
-          error.response ? error.response.data : error.messsage
+          "Error al modificar membresía",
+          error.response ? error.response.data : error.message
         );
-        alert("Error al modificar membresia");
       }
     } else {
       try {
@@ -45,23 +45,26 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
           "http://localhost:3001/nuevaMembresia",
           data
         );
-        console.log("Membresia agregada con exito", response.data);
+        toast.success("Membresía agregada con éxito");
         onSave();
       } catch (error) {
+        toast.error("Error al crear membresía");
         console.error(
-          "Error al crear membresia:",
+          "Error al crear membresía:",
           error.response ? error.response.data : error.message
         );
-        alert("Error al crear membresia");
       }
     }
   };
 
   return (
-    <div className="p-4 flex justify-center items-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 " >
+    <div className="max-w-lg mx-auto mt-10 bg-white p-8 shadow-md rounded-lg">
+      <h1 className="text-2xl font-semibold mb-6 text-center">Formulario de Membresía</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label className="block text-gray-700 mb-1">Couta</label>
+          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+            <FaUser className="mr-2" /> Nombre
+          </label>
           <input
             type="text"
             {...register("nombre", {
@@ -70,41 +73,46 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
                 message: "El nombre es obligatorio",
               },
             })}
-              className="border border-gray-800 py-2 px-4 rounded w-full focus:border-blue-500 focus:outline-none text-center"
-            
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.nombre && <span className="text-red-500">{errors.nombre.message}</span>}
+          {errors.nombre && <span className="text-red-500 text-sm">{errors.nombre.message}</span>}
         </div>
         <div>
-          <label  className="block text-gray-700 mb-1">Descripcion:</label>
+          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+            <FaInfoCircle className="mr-2" /> Descripción
+          </label>
           <input
             type="text"
             {...register("descripcion", {
               required: {
                 value: true,
-                message: "La descripcion es obligatoria",
+                message: "La descripción es obligatoria",
               },
             })}
-            className="border border-gray-800 py-2 px-4 rounded w-full focus:border-blue-500 focus:outline-none text-center"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.descripcion && <span className="text-red-500">{errors.descripcion.message}</span>}
+          {errors.descripcion && <span className="text-red-500 text-sm">{errors.descripcion.message}</span>}
         </div>
         <div>
-          <label  className="block text-gray-700 mb-1">Duracion:</label>
+          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+            <FaCalendarAlt className="mr-2" /> Duración (meses)
+          </label>
           <input
             type="number"
             {...register("duracion", {
               required: {
                 value: true,
-                message: "La duracion es obligatoria",
+                message: "La duración es obligatoria",
               },
             })}
-            className="border border-gray-800 py-2 px-4 rounded w-full focus:border-blue-500 focus:outline-none text-center"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.duracion && <span className="text-red-500">{errors.duracion.message}</span>}
+          {errors.duracion && <span className="text-red-500 text-sm">{errors.duracion.message}</span>}
         </div>
         <div>
-          <label  className="block text-gray-700 mb-1">Precio:</label>
+          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+            <FaDollarSign className="mr-2" /> Precio
+          </label>
           <input
             type="number"
             {...register("precio", {
@@ -114,16 +122,27 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
               },
               min: {
                 value: 1,
-                message: "La duración debe ser al menos 1",
-              }
+                message: "El precio debe ser al menos 1",
+              },
             })}
-          className="border border-gray-800 py-2 px-4 rounded w-full focus:border-blue-500 focus:outline-none text-center"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {errors.precio && <span className="text-red-500">{errors.precio.message}</span>}
+          {errors.precio && <span className="text-red-500 text-sm">{errors.precio.message}</span>}
         </div>
         <div className="flex justify-center space-x-4">
-          <button type="submit" className="px-2 font-medium text-sky-600 hover:bg-sky-700 hover:text-white rounded text-center ">Guardar</button>
-          <button type="button" onClick={onClose} className="px-2 font-medium text-sky-600 hover:bg-sky-700 hover:text-white rounded text-center">Cerrar</button>
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 flex items-center"
+          >
+            Guardar
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 flex items-center"
+          >
+            Cerrar
+          </button>
         </div>
       </form>
     </div>

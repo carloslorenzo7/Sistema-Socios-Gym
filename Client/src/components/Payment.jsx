@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaCalendarAlt, FaMoneyBillWave, FaPercentage, FaCreditCard, FaInfoCircle, FaPaperPlane } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Payment = () => {
   const {
@@ -19,24 +22,26 @@ const Payment = () => {
         "http://localhost:3001/clientes/pago",
         data
       );
-
-      console.log("Cliente creado con exito", response.data);
+      toast.success("Pago registrado con éxito");
       navigate("/dashboard");
     } catch (error) {
+      toast.error("Error al registrar el pago");
       console.error(
         "Error al crear el cliente:",
         error.response ? error.response.data : error.message
       );
-      alert("Error al crear el cliente  ");
     }
   };
 
   return (
-    <div>
-        <h1>Esto es el form de pagos</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="max-w-md mx-auto mt-10 bg-white p-8 shadow-md rounded-lg">
+      <ToastContainer />
+      <h1 className="text-2xl font-semibold mb-6 text-center">Formulario de Pagos</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label>Fecha de pago</label>
+          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+            <FaCalendarAlt className="mr-2" /> Fecha de pago
+          </label>
           <input
             type="date"
             {...register("fechaDePago", {
@@ -45,11 +50,14 @@ const Payment = () => {
                 message: "La fecha de pago es obligatoria",
               },
             })}
+            className="w-full p-2 border border-gray-300 rounded-md"
           />
-          {errors.fechaDePago && <span>{errors.fechaDePago.message}</span>}
+          {errors.fechaDePago && <span className="text-red-500 text-sm">{errors.fechaDePago.message}</span>}
         </div>
         <div>
-          <label>Monto</label>
+          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+            <FaMoneyBillWave className="mr-2" /> Monto
+          </label>
           <input
             type="number"
             {...register("monto", {
@@ -58,11 +66,14 @@ const Payment = () => {
                 message: "El monto es obligatorio",
               },
             })}
+            className="w-full p-2 border border-gray-300 rounded-md"
           />
-          {errors.monto && <span>{errors.monto.message}</span>}
+          {errors.monto && <span className="text-red-500 text-sm">{errors.monto.message}</span>}
         </div>
         <div>
-          <label>Cuota</label>
+          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+            <FaPercentage className="mr-2" /> Cuota
+          </label>
           <input
             type="text"
             {...register("cuota", {
@@ -71,11 +82,14 @@ const Payment = () => {
                 message: "La cuota es obligatoria",
               },
             })}
+            className="w-full p-2 border border-gray-300 rounded-md"
           />
-          {errors.cuota && <span>{errors.cuota.message}</span>}
+          {errors.cuota && <span className="text-red-500 text-sm">{errors.cuota.message}</span>}
         </div>
         <div>
-          <label>Metodo de pago</label>
+          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+            <FaCreditCard className="mr-2" /> Método de pago
+          </label>
           <input
             type="text"
             {...register("metodoPago", {
@@ -84,11 +98,14 @@ const Payment = () => {
                 message: "El método de pago es obligatorio",
               },
             })}
+            className="w-full p-2 border border-gray-300 rounded-md"
           />
-          {errors.metodoPago && <span>{errors.metodoPago.message}</span>}
+          {errors.metodoPago && <span className="text-red-500 text-sm">{errors.metodoPago.message}</span>}
         </div>
         <div>
-          <label>Estado de Pago</label>
+          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+            <FaInfoCircle className="mr-2" /> Estado de Pago
+          </label>
           <input
             type="text"
             {...register("estadoPago", {
@@ -97,10 +114,16 @@ const Payment = () => {
                 message: "El estado de pago es obligatorio",
               },
             })}
+            className="w-full p-2 border border-gray-300 rounded-md"
           />
-           {errors.estadoPago && <span>{errors.estadoPago.message}</span>}
+          {errors.estadoPago && <span className="text-red-500 text-sm">{errors.estadoPago.message}</span>}
         </div>
-        <input type="submit" value="Enviar" />
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-300 flex items-center justify-center"
+        >
+          <FaPaperPlane className="mr-2" /> Enviar
+        </button>
       </form>
     </div>
   );
