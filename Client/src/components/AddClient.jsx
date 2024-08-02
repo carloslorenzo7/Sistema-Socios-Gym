@@ -28,11 +28,11 @@ const AddClient = () => {
   };
 
   return (
-    <div>
-      <h1>Esto es el form de cliente</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-white">
+      <h1 className="text-2xl font-bold text-gray-900 mb-4 text-center">Nuevo Cliente</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div>
-          <label>Nombre</label>
+          <label className="block text-sm font-medium text-gray-700">Nombre</label>
           <input
             type="text"
             {...register("nombre", {
@@ -41,11 +41,12 @@ const AddClient = () => {
                 message: "El campo nombre es obligatorio",
               },
             })}
+            className="border border-gray-600 w-full"
           />
           {errors.nombre && <span>{errors.nombre.message}</span>}
         </div>
         <div>
-          <label>Email</label>
+          <label className="block text-sm font-medium text-gray-700">Email</label>
           <input
             type="email"
             {...register("email", {
@@ -62,7 +63,7 @@ const AddClient = () => {
           {errors.email && <span>{errors.email.message}</span>}
         </div>
         <div>
-        <label>Dni</label>
+        <label className="block text-sm font-medium text-gray-700">Dni</label>
           <input
             type="text"
             {...register("dni", {
