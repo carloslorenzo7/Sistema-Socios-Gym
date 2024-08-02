@@ -14,7 +14,7 @@ require ('dotenv').config() // Cargar variables de entorno desde .env
 const {PORT} = process.env;
 
 // Sincronizar la conexión a la base de datos
-conn.sync({ force: true}) .then(() => {
+conn.sync({ force: false}) .then(() => {
     // Iniciar el servidor
     server.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);
