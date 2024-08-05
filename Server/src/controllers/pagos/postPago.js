@@ -7,8 +7,6 @@ const postPago = async (req) => {
       idUsuario,
       idMembresia,
       fechaDePago,
-      monto, 
-      metodoPago,
       estadoPago,
     } = req.body;
 
@@ -21,54 +19,40 @@ const postPago = async (req) => {
     if (!fechaPagoDate.isValid()) {
       throw new Error("Invalid time value");
     }
-    console.log("Fecha Pago Zoned:", fechaPagoDate.format());
 
-    //Obtengo la membresia para calcualr la fecha de vencimiento
-
+    // Obtener la membresía para calcular el monto y la fecha de vencimiento
     const membresia = await Membresias.findByPk(idMembresia);
 
     if (!membresia) {
-      throw new Error("Membresia no encontrada");
+      throw new Error("Membresía no encontrada");
     }
 
     // Calcular la fecha de vencimiento usando la duración de la membresía
-    const fechaDeVencimiento = fechaPagoDate.clone().add(1, 'months');
-
-    // opcion 2 - con fallas postea 2 dias de menos
-    // const fechaDeVencimiento = fechaPagoDate
-    //   .clone()
-    //   .add(membresia.duracion, "days");
-
+    const fechaDeVencimiento = fechaPagoDate.clone().add(membresia.duracion, "days");
 
     // Convertir a UTC antes de guardar en la base de datos
     const fechaPagoUtc = fechaPagoDate.clone().utc().format();
     const fechaDeVencimientoUtc = fechaDeVencimiento.clone().utc().format();
 
-    console.log("Fecha Pago UTC:", fechaPagoUtc);
-    console.log("Fecha Vencimiento UTC:", fechaDeVencimientoUtc);
-
-    // Crear el nuevo pago con la fecha de vencimiento calculada
+    // Crear el nuevo pago con la fecha de vencimiento calculada y el precio de la membresía
     const nuevoPago = await Pagos.create({
       idUsuario,
       idMembresia,
       fechaDePago: fechaPagoUtc,
       fechaDeVencimiento: fechaDeVencimientoUtc,
-      monto,
-      metodoPago,
+      monto: membresia.precio,
       estadoPago,
     });
-    console.log("Nuevo pago:", nuevoPago);
-    // actualizacion del estado de membresia
+
+    // Actualizar el estado del usuario para que coincida con el estado del pago
     const usuario = await Usuarios.findByPk(idUsuario);
     if (usuario) {
-      
-      usuario.estado = estadoPago === "pagado" ? "activo" : "sin membresia";
-      console.log("Usuario después de la actualización:", usuario);
+      usuario.estado = estadoPago === "pagado" ? "activo" : "vencido";
       await usuario.save();
     }
 
     return {
-      message: "Pago realizado exitosamente y estado de membresía actualizado",
+      message: "Pago realizado exitosamente y estado de usuario actualizado",
       pago: nuevoPago,
     };
   } catch (error) {

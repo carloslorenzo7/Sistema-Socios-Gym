@@ -13,9 +13,15 @@ const ClientDetail = () => {
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
-    dni: "",
-    estado: ""
+    dni: ""
   });
+  const [isAddingPayment, setIsAddingPayment] = useState(false);
+  const [paymentData, setPaymentData] = useState({
+    fechaDePago: "",
+    idMembresia: "",
+    estadoPago: "pendiente",  // Default value changed to "pendiente"
+  });
+  const [membresias, setMembresias] = useState([]);
 
   useEffect(() => {
     const fetchClient = async () => {
@@ -25,8 +31,7 @@ const ClientDetail = () => {
         setFormData({
           nombre: response.data.nombre,
           email: response.data.email,
-          dni: response.data.dni,
-          estado: response.data.estado
+          dni: response.data.dni
         });
         setLoading(false);
       } catch (error) {
@@ -35,12 +40,28 @@ const ClientDetail = () => {
         toast.error("Error al obtener datos de cliente");
       }
     };
+
+    const fetchMembresias = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/membresias");
+        setMembresias(response.data);
+      } catch (error) {
+        toast.error("Error al obtener membresías");
+      }
+    };
+
     fetchClient();
+    fetchMembresias();
   }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handlePaymentChange = (e) => {
+    const { name, value } = e.target;
+    setPaymentData({ ...paymentData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -55,6 +76,31 @@ const ClientDetail = () => {
       toast.success("Cliente actualizado con éxito");
     } catch (error) {
       toast.error("Error al actualizar cliente");
+    }
+  };
+
+  const handleAddPayment = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`http://localhost:3001/clientes/pago`, {
+        idUsuario: id,
+        ...paymentData
+      });
+      setClient({ ...client, Pagos: [...client.Pagos, response.data.pago] });
+      setIsAddingPayment(false);
+      toast.success("Pago añadido con éxito");
+    } catch (error) {
+      toast.error("Error al añadir pago");
+    }
+  };
+
+  const handleDeletePayment = async (idPago) => {
+    try {
+      await axios.delete(`http://localhost:3001/cliente/pago/eliminarPago/${idPago}`);
+      setClient({ ...client, Pagos: client.Pagos.filter((pago) => pago.idPago !== idPago) });
+      toast.success("Pago eliminado con éxito");
+    } catch (error) {
+      toast.error("Error al eliminar pago");
     }
   };
 
@@ -110,17 +156,6 @@ const ClientDetail = () => {
               required
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Estado:</label>
-            <input
-              type="text"
-              name="estado"
-              value={formData.estado}
-              onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
-          </div>
           <div className="flex justify-end space-x-4">
             <button
               type="button"
@@ -156,20 +191,96 @@ const ClientDetail = () => {
       <h3 className="text-xl font-semibold mt-6">Pagos</h3>
       <ul className="mt-4 space-y-4">
         {client.Pagos && client.Pagos.length > 0 ? (
-          client.Pagos.map(pago => (
-            <li key={pago.idPago} className="border p-4 rounded-lg shadow-sm">
-              <p><strong>Monto:</strong> {pago.monto}</p>
-              <p><strong>Fecha de pago:</strong> {formatDate(pago.fechaDePago)}</p>
-              <p><strong>Cuota:</strong> {pago.cuota}</p>
-              <p><strong>Método de pago:</strong> {pago.metodoPago}</p>
-              <p><strong>Estado de pago:</strong> {pago.estadoPago}</p>
-              <p><strong>Fecha de vencimiento:</strong> {formatDate(pago.fechaDeVencimiento)}</p>
-            </li>
+          client.Pagos.map((pago) => (
+            pago && (
+              <li key={pago.idPago} className="border p-4 rounded-lg shadow-sm flex justify-between items-center">
+                <div>
+                  <p><strong>Monto:</strong> {pago.monto}</p>
+                  <p><strong>Fecha de pago:</strong> {formatDate(pago.fechaDePago)}</p>
+                  <p><strong>Cuota:</strong> {pago.cuota}</p>
+                  <p><strong>Estado de pago:</strong> {pago.estadoPago}</p>
+                  <p><strong>Fecha de vencimiento:</strong> {formatDate(pago.fechaDeVencimiento)}</p>
+                </div>
+                <button
+                  onClick={() => handleDeletePayment(pago.idPago)}
+                  className="ml-4 px-4 py-2 bg-red-500 text-white rounded-md shadow-sm"
+                >
+                  Eliminar
+                </button>
+              </li>
+            )
           ))
         ) : (
           <p className="text-center text-gray-500">No hay pagos disponibles.</p>
         )}
       </ul>
+      <button
+        onClick={() => setIsAddingPayment(true)}
+        className="mt-6 px-4 py-2 bg-green-500 text-white rounded-md shadow-sm"
+      >
+        Añadir Pago
+      </button>
+      {isAddingPayment && (
+        <form onSubmit={handleAddPayment} className="mt-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Fecha de Pago:</label>
+            <input
+              type="date"
+              name="fechaDePago"
+              value={paymentData.fechaDePago}
+              onChange={handlePaymentChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Tipo de Membresía:</label>
+            <select
+              name="idMembresia"
+              value={paymentData.idMembresia}
+              onChange={handlePaymentChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="">Seleccionar Membresía</option>
+              {membresias.map((membresia) => (
+                <option key={membresia.id} value={membresia.id}>
+                  {membresia.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Estado de Pago:</label>
+            <select
+              name="estadoPago"
+              value={paymentData.estadoPago}
+              onChange={handlePaymentChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="pendiente">Pendiente</option>
+              <option value="pagado">Pagado</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+          <div className="flex justify-end space-x-4">
+            <button
+              type="button"
+              onClick={() => setIsAddingPayment(false)}
+              className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md shadow-sm"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-green-500 text-white rounded-md shadow-sm"
+            >
+              Añadir Pago
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 };

@@ -5,15 +5,11 @@ module.exports = (sequelize) => {
     "Pagos",
     {
       idPago: {
-
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false,
-
-      
       },
-
       idUsuario: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -21,34 +17,23 @@ module.exports = (sequelize) => {
           model: "Usuarios",
           key: "id",
         },
-        
-
-     
       },
-      idMembresia:{
+      idMembresia: {
         type: DataTypes.INTEGER,
-        allowNull:false,
-        references:{
-          model:"Membresias",
-          key:"id"
+        allowNull: false,
+        references: {
+          model: "Membresias",
+          key: "id",
         },
       },
-
       fechaDePago: {
         type: DataTypes.DATE,
         allowNull: false,
       },
-
       monto: {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
-
-      metodoPago: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-
       estadoPago: {
         type: DataTypes.ENUM,
         values: ["pendiente", "pagado", "cancelado"],
@@ -59,8 +44,8 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     },
-     {
-       timestamps: false,
+    {
+      timestamps: false,
     }
   );
 };
