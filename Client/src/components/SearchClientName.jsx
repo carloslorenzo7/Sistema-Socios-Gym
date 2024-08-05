@@ -30,7 +30,7 @@ const SearchClientName = ({ nombre }) => {
   }, [nombre]);
 
   return (
-    <div>
+    <div className="max-w-4xl mx-auto mt-10 bg-white p-8 shadow-md rounded-lg">
       {error && <p>{error}</p>}
       {client.length > 0
         ? client.map((c) => (
