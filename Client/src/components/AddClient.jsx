@@ -33,13 +33,6 @@ const AddClient = () => {
   };
 
   return (
-<<<<<<< HEAD
-    <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-white">
-      <h1 className="text-2xl font-bold text-gray-900 mb-4 text-center">Nuevo Cliente</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Nombre</label>
-=======
     <div className="max-w-md mx-auto mt-10 bg-white p-8 shadow-md rounded-lg">
       <ToastContainer />
       <h1 className="text-2xl font-semibold mb-6 text-center">Añadir Cliente</h1>
@@ -48,7 +41,6 @@ const AddClient = () => {
           <label className="block text-gray-700 font-medium mb-2 flex items-center">
             <FaUser className="mr-2" /> Nombre
           </label>
->>>>>>> 3e75e4a362efb4288e245e45ad2e4f811c39838b
           <input
             type="text"
             {...register("nombre", {
@@ -57,22 +49,30 @@ const AddClient = () => {
                 message: "El campo nombre es obligatorio",
               },
             })}
-<<<<<<< HEAD
-            className="border border-gray-600 w-full"
-=======
             className="w-full p-2 border border-gray-300 rounded-md"
->>>>>>> 3e75e4a362efb4288e245e45ad2e4f811c39838b
           />
           {errors.nombre && <span className="text-red-500 text-sm">{errors.nombre.message}</span>}
         </div>
         <div>
-<<<<<<< HEAD
-          <label className="block text-sm font-medium text-gray-700">Email</label>
-=======
+          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+            <FaUser className="mr-2" /> Apellido
+          </label>
+          <input
+            type="text"
+            {...register("apellido", {
+              required: {
+                value: true,
+                message: "El campo apellido es obligatorio",
+              },
+            })}
+            className="w-full p-2 border border-gray-300 rounded-md"
+          />
+          {errors.apellido && <span className="text-red-500 text-sm">{errors.apellido.message}</span>}
+        </div>
+        <div>
           <label className="block text-gray-700 font-medium mb-2 flex items-center">
             <FaEnvelope className="mr-2" /> Email
           </label>
->>>>>>> 3e75e4a362efb4288e245e45ad2e4f811c39838b
           <input
             type="email"
             {...register("email", {
@@ -90,13 +90,9 @@ const AddClient = () => {
           {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
         </div>
         <div>
-<<<<<<< HEAD
-        <label className="block text-sm font-medium text-gray-700">Dni</label>
-=======
           <label className="block text-gray-700 font-medium mb-2 flex items-center">
             <FaIdCard className="mr-2" /> DNI
           </label>
->>>>>>> 3e75e4a362efb4288e245e45ad2e4f811c39838b
           <input
             type="text"
             {...register("dni", {

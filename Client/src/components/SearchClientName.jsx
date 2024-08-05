@@ -36,9 +36,10 @@ const SearchClientName = ({ nombre }) => {
         ? client.map((c) => (
             <div key={c.id}>
               <Link to={`/dashboard/cliente/${c.id}`}>
-              <p>{c.nombre}</p>
-              <p>{c.email}</p>
-              <p>{c.dni}</p>
+              <p>Nombre:{c.nombre}</p>
+              <p>Apellido{c.apellido}</p>
+              <p>Email:{c.email}</p>
+              <p>Dni:{c.dni}</p>
               </Link>
             </div>
           ))

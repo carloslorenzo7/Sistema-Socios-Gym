@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
-import { MdModeEditOutline } from "react-icons/md";
-=======
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
->>>>>>> 3e75e4a362efb4288e245e45ad2e4f811c39838b
 
 const ClientList = () => {
   const [clients, setClients] = useState([]);
@@ -49,51 +45,6 @@ const ClientList = () => {
   }
 
   return (
-<<<<<<< HEAD
-    <div>
-      <h2>Lista de clientes</h2>
-      <table>
-        <thead>
-          <tr className="bg-gray-500 uppercase text-sm leading-normal">
-            <th className="py-3 px-6 text-left">Id</th>
-            <th className="py-3 px-6 text-left">Nombre</th>
-            <th className="py-3 px-6 text-left">Mail</th>
-            <th className="py-3 px-6 text-left">Estado</th>
-            <th className="py-3 px-6 text-left">Editar</th>
-          </tr>
-        </thead>
-        <tbody>
-          {clients.map((client) => (
-            <tr key={client.id}>
-              <td className="py-3 px-6 text-left">
-                <Link to={`/dashboard/cliente/${client.id}`}>{client.id}</Link>
-              </td>
-              <td className="py-3 px-6 text-left">
-                <Link to={`/dashboard/cliente/${client.id}`}>
-                  {client.nombre}
-                </Link>
-              </td>
-              <td className="py-3 px-6 text-left">
-                <Link to={`/dashboard/cliente/${client.id}`}>
-                  {client.email}
-                </Link>
-              </td>
-              <td className="py-3 px-6 text-left">
-                {client.estado.length > 0 ? (
-                  client.estado
-                ) : (
-                  <span>Pago no registrado</span>
-                )}
-              </td>
-              <td className="py-3 px-10 text-left">
-                <div>
-                  {/* boton editar */}
-                  <Link to={`/dashboard/cliente/${client.id}`}>
-                  <MdModeEditOutline className="text-2xl"/>
-                  </Link>
-                </div>
-              </td>
-=======
     <div className="max-w-6xl mx-auto mt-8">
       <ToastContainer />
       <h2 className="text-2xl font-semibold mb-6 text-center">Lista de clientes</h2>
@@ -103,11 +54,11 @@ const ClientList = () => {
             <tr className="bg-gray-800 text-white uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-left">Id</th>
               <th className="py-3 px-6 text-left">Nombre</th>
+              <th className="py-3 px-6 text-left">Apellido</th>
               <th className="py-3 px-6 text-left">Mail</th>
               <th className="py-3 px-6 text-left">Estado</th>
               <th className="py-3 px-6 text-left">Editar</th>
               <th className="py-3 px-6 text-left">Eliminar</th>
->>>>>>> 3e75e4a362efb4288e245e45ad2e4f811c39838b
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm font-light">
@@ -121,6 +72,11 @@ const ClientList = () => {
                 <td className="py-3 px-6 text-left">
                   <Link to={`/dashboard/cliente/${client.id}`} className="text-blue-500 hover:underline">
                     {client.nombre}
+                  </Link>
+                </td>
+                <td className="py-3 px-6 text-left">
+                  <Link to={`/dashboard/cliente/${client.id}`} className="text-blue-500 hover:underline">
+                    {client.apellido}
                   </Link>
                 </td>
                 <td className="py-3 px-6 text-left">
