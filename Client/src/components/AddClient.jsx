@@ -55,6 +55,22 @@ const AddClient = () => {
         </div>
         <div>
           <label className="block text-gray-700 font-medium mb-2 flex items-center">
+            <FaUser className="mr-2" /> Apellido
+          </label>
+          <input
+            type="text"
+            {...register("apellido", {
+              required: {
+                value: true,
+                message: "El campo apellido es obligatorio",
+              },
+            })}
+            className="w-full p-2 border border-gray-300 rounded-md"
+          />
+          {errors.apellido && <span className="text-red-500 text-sm">{errors.apellido.message}</span>}
+        </div>
+        <div>
+          <label className="block text-gray-700 font-medium mb-2 flex items-center">
             <FaEnvelope className="mr-2" /> Email
           </label>
           <input

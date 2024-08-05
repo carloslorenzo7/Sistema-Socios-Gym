@@ -9,6 +9,7 @@ const EditUser = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState({
         nombre: "",
+        apellido:"",
         email: "",
         estado: ""
     });
@@ -69,6 +70,17 @@ const EditUser = () => {
                         type="text"
                         name="nombre"
                         value={user.nombre}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-600"
+                        required
+                    />
+                </div>
+                 <div className="mb-4">
+                    <label className="block text-gray-700">Apellido:</label>
+                    <input
+                        type="text"
+                        name="apellido"
+                        value={user.apellido}
                         onChange={handleChange}
                         className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-600"
                         required

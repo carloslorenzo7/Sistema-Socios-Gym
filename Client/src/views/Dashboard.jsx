@@ -18,6 +18,8 @@ const Dashboard = () => {
 
   const handleInputChange = (e) => {
     setNombre(e.target.value);
+   
+    
   };
 
   const location = useLocation();
@@ -68,7 +70,7 @@ const Dashboard = () => {
         {showSearchBar && (
           <div className="mb-4">
             <input
-              className="text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="text-black w-full px-3 py-2 mt-6 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               type="text"
               value={nombre}
               onChange={handleInputChange}
