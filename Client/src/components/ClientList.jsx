@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const ClientList = () => {
-  const [clients, setClients] = useState([]);
+  const [clients, setClients] = useState([]); // Inicializar como array vacío
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -15,11 +15,11 @@ const ClientList = () => {
       try {
         const response = await axios.get("http://localhost:3001/clientes");
         setClients(response.data);
-        setLoading(false);
       } catch (error) {
         setError("Error al obtener los clientes");
-        setLoading(false);
         toast.error("Error al obtener los clientes");
+      } finally {
+        setLoading(false);
       }
     };
     fetchClients();
@@ -44,6 +44,10 @@ const ClientList = () => {
     return <p className="text-center text-xl text-red-500">{error}</p>;
   }
 
+  if (!Array.isArray(clients)) {
+    return <p className="text-center text-xl text-red-500">Datos de clientes inválidos</p>;
+  }
+
   return (
     <div className="max-w-6xl mx-auto mt-8">
       <ToastContainer />
@@ -54,7 +58,6 @@ const ClientList = () => {
             <tr className="bg-gray-800 text-white uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-left">Id</th>
               <th className="py-3 px-6 text-left">Nombre</th>
-              <th className="py-3 px-6 text-left">Apellido</th>
               <th className="py-3 px-6 text-left">Mail</th>
               <th className="py-3 px-6 text-left">Estado</th>
               <th className="py-3 px-6 text-left">Editar</th>
@@ -72,11 +75,6 @@ const ClientList = () => {
                 <td className="py-3 px-6 text-left">
                   <Link to={`/dashboard/cliente/${client.id}`} className="text-blue-500 hover:underline">
                     {client.nombre}
-                  </Link>
-                </td>
-                <td className="py-3 px-6 text-left">
-                  <Link to={`/dashboard/cliente/${client.id}`} className="text-blue-500 hover:underline">
-                    {client.apellido}
                   </Link>
                 </td>
                 <td className="py-3 px-6 text-left">
