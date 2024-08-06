@@ -3,53 +3,55 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const SearchClientName = ({ nombre }) => {
-  const [client, setClient] = useState([]); // donde vamos a obtener datos recibidos de api
+const SearchClientName = ({ onSearch, clearSearch }) => {
+  const [nombre, setNombre] = useState("");
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!nombre) return;
+    if (nombre === "") {
+      clearSearch();
+      return;
+    }
 
     const axiosClients = async () => {
       try {
         const response = await axios.get(
           "http://localhost:3001/cliente/nombre",
           {
-            params: { nombre }, // Esto genera una URL como: http://localhost:3001/cliente/nombre?nombre=valor
+            params: { nombre },
           }
         );
-
-        setClient(response.data);
-        setError([]);
+        onSearch(response.data);
+        setError(null);
       } catch (error) {
         setError("Error al buscar clientes");
-        setClient([]); // limpio datos de cleinte en caso de error
+        onSearch([]); // limpio datos de cliente en caso de error
       }
     };
     axiosClients();
-  }, [nombre]);
+  }, [nombre, onSearch, clearSearch]);
+
+  const handleInputChange = (e) => {
+    setNombre(e.target.value);
+  };
 
   return (
-    <div>
-      {error && <p>{error}</p>}
-      {client.length > 0
-        ? client.map((c) => (
-            <div key={c.id}>
-              <Link to={`/dashboard/cliente/${c.id}`}>
-              <p>Nombre:{c.nombre}</p>
-              <p>Apellido{c.apellido}</p>
-              <p>Email:{c.email}</p>
-              <p>Dni:{c.dni}</p>
-              </Link>
-            </div>
-          ))
-        : !error && <p>No se encontraron clientes</p>}
+    <div className="max-w-4xl mx-auto mt-8 p-4 bg-white shadow-md rounded-lg">
+      <input
+        type="text"
+        value={nombre}
+        onChange={handleInputChange}
+        placeholder="Buscar por nombre"
+        className="w-full p-2 border rounded"
+      />
+      {error && <p className="text-red-500 text-center">{error}</p>}
     </div>
   );
 };
 
 SearchClientName.propTypes = {
-  nombre: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired,
+  clearSearch: PropTypes.func.isRequired,
 };
 
 export default SearchClientName;

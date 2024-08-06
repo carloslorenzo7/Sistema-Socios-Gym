@@ -38,7 +38,7 @@ const AddClient = () => {
       <h1 className="text-2xl font-semibold mb-6 text-center">Añadir Cliente</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+          <label className="block text-gray-700 font-medium mb-2 items-center">
             <FaUser className="mr-2" /> Nombre
           </label>
           <input
@@ -54,7 +54,7 @@ const AddClient = () => {
           {errors.nombre && <span className="text-red-500 text-sm">{errors.nombre.message}</span>}
         </div>
         <div>
-          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+          <label className="block text-gray-700 font-medium mb-2 items-center">
             <FaUser className="mr-2" /> Apellido
           </label>
           <input
@@ -70,7 +70,7 @@ const AddClient = () => {
           {errors.apellido && <span className="text-red-500 text-sm">{errors.apellido.message}</span>}
         </div>
         <div>
-          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+          <label className="block text-gray-700 font-medium mb-2 items-center">
             <FaEnvelope className="mr-2" /> Email
           </label>
           <input
@@ -90,7 +90,7 @@ const AddClient = () => {
           {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
         </div>
         <div>
-          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+          <label className="block text-gray-700 font-medium mb-2 items-center">
             <FaIdCard className="mr-2" /> DNI
           </label>
           <input
