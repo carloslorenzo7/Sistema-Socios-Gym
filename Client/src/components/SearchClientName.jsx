@@ -1,67 +1,57 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const SearchClientName = ({ nombre }) => {
-  const [client, setClient] = useState([]); // donde vamos a obtener datos recibidos de api
+const SearchClientName = ({ onSearch, clearSearch }) => {
+  const [nombre, setNombre] = useState("");
   const [error, setError] = useState(null);
-  const location=useLocation;
+
   useEffect(() => {
-    if (!nombre) return;
+    if (nombre === "") {
+      clearSearch();
+      return;
+    }
 
     const axiosClients = async () => {
       try {
         const response = await axios.get(
           "http://localhost:3001/cliente/nombre",
           {
-            params: { nombre }, // Esto genera una URL como: http://localhost:3001/cliente/nombre?nombre=valor
+            params: { nombre },
           }
         );
-
-        setClient(response.data);
-        console.log(setClient);
-        
-        setError([]);
+        onSearch(response.data);
+        setError(null);
       } catch (error) {
         setError("Error al buscar clientes");
-        setClient([]); // limpio datos de cleinte en caso de error
+        onSearch([]); // limpio datos de cliente en caso de error
       }
     };
     axiosClients();
-  }, [nombre]);
+  }, [nombre, onSearch, clearSearch]);
 
-  useEffect(() => {
-    return () => {
-      setClient([]);
-      setError(null);
-    };
-  }, [location])
+  const handleInputChange = (e) => {
+    setNombre(e.target.value);
+  };
+
   return (
-    <div className="max-w-4xl mx-auto mt-10 bg-white p-8 shadow-md rounded-lg">
-      {error && <p>{error}</p>}
-      <ul className="mt-4">
-
-      {client.length > 0
-        ? client.map((c) => (
-            <li key={c.id}  className="pb-4 ">
-              <Link to={`/dashboard/cliente/${c.id}`} className="block space-y-2 border-b-2">
-              <p><strong>Nombre:</strong>{c.nombre}</p>
-              <p><strong>Apellido:</strong>{c.apellido}</p>
-              <p><strong>Email:</strong>{c.email}</p>
-              <p><strong>Dni:</strong>{c.dni}</p>
-              </Link>
-            </li>
-          ))
-        : !error && <p>No se encontraron clientes</p>}
-
-      </ul>
+    <div className="max-w-4xl mx-auto mt-8 p-4 bg-white shadow-md rounded-lg">
+      <input
+        type="text"
+        value={nombre}
+        onChange={handleInputChange}
+        placeholder="Buscar por nombre"
+        className="w-full p-2 border rounded"
+      />
+      {error && <p className="text-red-500 text-center">{error}</p>}
     </div>
   );
 };
 
 SearchClientName.propTypes = {
-  nombre: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired,
+  clearSearch: PropTypes.func.isRequired,
 };
 
 export default SearchClientName;

@@ -39,7 +39,7 @@ const Payment = () => {
       <h1 className="text-2xl font-semibold mb-6 text-center">Formulario de Pagos</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+          <label className="block text-gray-700 font-medium mb-2 items-center">
             <FaCalendarAlt className="mr-2" /> Fecha de pago
           </label>
           <input
@@ -55,7 +55,7 @@ const Payment = () => {
           {errors.fechaDePago && <span className="text-red-500 text-sm">{errors.fechaDePago.message}</span>}
         </div>
         <div>
-          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+          <label className="block text-gray-700 font-medium mb-2 items-center">
             <FaMoneyBillWave className="mr-2" /> Monto
           </label>
           <input
@@ -71,7 +71,7 @@ const Payment = () => {
           {errors.monto && <span className="text-red-500 text-sm">{errors.monto.message}</span>}
         </div>
         <div>
-          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+          <label className="block text-gray-700 font-medium mb-2 items-center">
             <FaPercentage className="mr-2" /> Cuota
           </label>
           <input
@@ -87,7 +87,7 @@ const Payment = () => {
           {errors.cuota && <span className="text-red-500 text-sm">{errors.cuota.message}</span>}
         </div>
         <div>
-          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+          <label className="block text-gray-700 font-medium mb-2 items-center">
             <FaCreditCard className="mr-2" /> Método de pago
           </label>
           <input
@@ -103,7 +103,7 @@ const Payment = () => {
           {errors.metodoPago && <span className="text-red-500 text-sm">{errors.metodoPago.message}</span>}
         </div>
         <div>
-          <label className="block text-gray-700 font-medium mb-2 flex items-center">
+          <label className="block text-gray-700 font-medium mb-2 items-center">
             <FaInfoCircle className="mr-2" /> Estado de Pago
           </label>
           <input

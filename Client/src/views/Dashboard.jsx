@@ -2,24 +2,18 @@ import { useState } from "react";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
 
 import ClientList from "../components/ClientList";
-import ClientDetail from "./ClientDetail"; // Corrigido el nombre
+import ClientDetail from "./ClientDetail";
 import AddClient from "../components/AddClient";
 import Payment from "../components/Payment";
 import SearchClientName from "../components/SearchClientName";
 import Memberships from "../components/Memberships";
+import ClientManagement from "../components/ClientManagement";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [nombre, setNombre] = useState("");
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
-  };
-
-  const handleInputChange = (e) => {
-    setNombre(e.target.value);
-   
-    
   };
 
   const location = useLocation();
@@ -69,28 +63,17 @@ const Dashboard = () => {
       <div className={`flex-1 p-20 bg-gray-100 ${isOpen ? "ml-64" : "ml-0"} transition-all duration-300 pt-16`}>
         {showSearchBar && (
           <div className="mb-4">
-            <input
-              className="text-black w-full px-3 py-2 mt-6 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              type="text"
-              value={nombre}
-              onChange={handleInputChange}
-              placeholder="Buscar cliente"
-            />
+            {/* Componente de búsqueda */}
           </div>
         )}
 
-        {nombre ? (
-          <SearchClientName nombre={nombre} />
-        ) : (
-          <Routes>
-            <Route path="/clientes" exact Component={ClientList} />
-            <Route path="/cliente/:id" exact Component={ClientDetail} />
-            <Route path="/cliente/nuevoCliente" exact Component={AddClient} />
-            <Route path="/clientes/pago" exact Component={Payment} />
-            <Route path="/cliente/nombre" exact Component={() => <SearchClientName nombre={nombre} />} />
-            <Route path="/membresias" exact Component={Memberships} />
-          </Routes>
-        )}
+        <Routes>
+          <Route path="/clientes" exact Component={ClientManagement} />
+          <Route path="/cliente/:id" exact Component={ClientDetail} />
+          <Route path="/cliente/nuevoCliente" exact Component={AddClient} />
+          <Route path="/clientes/pago" exact Component={Payment} />
+          <Route path="/membresias" exact Component={Memberships} />
+        </Routes>
       </div>
     </div>
   );

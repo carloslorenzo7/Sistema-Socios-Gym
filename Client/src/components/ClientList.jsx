@@ -5,16 +5,21 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-const ClientList = () => {
-  const [clients, setClients] = useState([]); // Inicializar como array vacío
+const ClientList = ({ clients, isSearching }) => {
+  const [allClients, setAllClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (isSearching) {
+      setLoading(false);
+      return;
+    }
+
     const fetchClients = async () => {
       try {
         const response = await axios.get("http://localhost:3001/clientes");
-        setClients(response.data);
+        setAllClients(response.data);
       } catch (error) {
         setError("Error al obtener los clientes");
         toast.error("Error al obtener los clientes");
@@ -23,12 +28,12 @@ const ClientList = () => {
       }
     };
     fetchClients();
-  }, []);
+  }, [isSearching]);
 
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:3001/eliminarCliente/${id}`);
-      setClients(clients.filter((client) => client.id !== id));
+      setAllClients(allClients.filter((client) => client.id !== id));
       toast.success("Cliente eliminado con éxito");
     } catch (error) {
       setError("Error al eliminar cliente");
@@ -44,7 +49,9 @@ const ClientList = () => {
     return <p className="text-center text-xl text-red-500">{error}</p>;
   }
 
-  if (!Array.isArray(clients)) {
+  const displayClients = isSearching ? clients : allClients;
+
+  if (!Array.isArray(displayClients)) {
     return <p className="text-center text-xl text-red-500">Datos de clientes inválidos</p>;
   }
 
@@ -65,36 +72,39 @@ const ClientList = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm font-light">
-            {clients.map((client) => (
-              <tr key={client.id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6 text-left whitespace-nowrap">
-                  <Link to={`/dashboard/cliente/${client.id}`} className="text-blue-500 hover:underline">
+            {displayClients.map((client) => (
+              <tr
+                key={client.id}
+                className={`border-b border-gray-200 ${client.estado === 'pendiente' ? 'bg-yellow-500' : ''} ${client.estado === 'sin membresia' ? 'bg-red-400' : ''}`}
+              >
+                <td className="py-3 px-6 text-left whitespace-nowrap text-lg font-medium text-gray-800">
+                  <Link to={`/dashboard/cliente/${client.id}`} className="text-black hover:underline">
                     {client.id}
                   </Link>
                 </td>
-                <td className="py-3 px-6 text-left">
-                  <Link to={`/dashboard/cliente/${client.id}`} className="text-blue-500 hover:underline">
+                <td className="py-3 px-6 text-left text-lg font-medium text-gray-800">
+                  <Link to={`/dashboard/cliente/${client.id}`} className="text-black hover:underline">
                     {client.nombre}
                   </Link>
                 </td>
-                <td className="py-3 px-6 text-left">
-                  <Link to={`/dashboard/cliente/${client.id}`} className="text-blue-500 hover:underline">
+                <td className="py-3 px-6 text-left text-lg font-medium text-gray-800">
+                  <Link to={`/dashboard/cliente/${client.id}`} className="text-black hover:underline">
                     {client.email}
                   </Link>
                 </td>
-                <td className="py-3 px-6 text-left">
+                <td className="py-3 px-6 text-left text-lg font-medium text-gray-800">
                   {client.estado.length > 0 ? (
                     client.estado
                   ) : (
                     <span className="text-red-500">Pago no registrado</span>
                   )}
                 </td>
-                <td className="py-3 px-6 text-left">
-                  <Link to={`/dashboard/cliente/${client.id}`} className="text-yellow-500 hover:text-yellow-600">
+                <td className="py-3 px-6 text-left text-lg font-medium text-gray-800">
+                  <Link to={`/dashboard/cliente/${client.id}`} className="text-black hover:text-gray-600">
                     <FaEdit size={20} />
                   </Link>
                 </td>
-                <td className="py-3 px-6 text-left">
+                <td className="py-3 px-6 text-left text-lg font-medium text-gray-800">
                   <button
                     onClick={() => handleDelete(client.id)}
                     className="text-red-600 hover:text-red-800 transition duration-300"
