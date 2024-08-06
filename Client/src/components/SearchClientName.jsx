@@ -8,6 +8,7 @@ const SearchClientName = ({ onSearch, clearSearch }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Verifica si nombre es una cadena vacía y si clearSearch ya ha sido llamado
     if (nombre === "") {
       clearSearch();
       return;
@@ -25,11 +26,12 @@ const SearchClientName = ({ onSearch, clearSearch }) => {
         setError(null);
       } catch (error) {
         setError("Error al buscar clientes");
-        onSearch([]); // limpio datos de cliente en caso de error
+        onSearch([]); // Limpio datos de cliente en caso de error
       }
     };
+
     axiosClients();
-  }, [nombre, onSearch, clearSearch]);
+  }, [nombre]);
 
   const handleInputChange = (e) => {
     setNombre(e.target.value);

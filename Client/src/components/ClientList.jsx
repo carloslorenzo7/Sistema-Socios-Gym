@@ -75,7 +75,6 @@ const ClientList = ({ clients, isSearching }) => {
             {displayClients.map((client) => (
               <tr
                 key={client.id}
-                className={`border-b border-gray-200 ${client.estado === 'pendiente' ? 'bg-yellow-500' : ''} ${client.estado === 'sin membresia' ? 'bg-red-400' : ''}`}
               >
                 <td className="py-3 px-6 text-left whitespace-nowrap text-lg font-medium text-gray-800">
                   <Link to={`/dashboard/cliente/${client.id}`} className="text-black hover:underline">
