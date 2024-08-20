@@ -23,8 +23,11 @@ const AddClient = () => {
         data
       );
       toast.success("Cliente creado con éxito");
+
+      const newClientId = response.data.id; // Asume que el backend devuelve el ID del cliente creado
+
       setTimeout(() => {
-        navigate("/dashboard/clientes");
+        navigate(`/dashboard/cliente/${newClientId}`); // Redirige al detalle del cliente recién creado
       }, 1000);
     } catch (error) {
       toast.error("Error al crear el cliente");

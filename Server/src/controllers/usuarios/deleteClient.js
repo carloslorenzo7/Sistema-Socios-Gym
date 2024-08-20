@@ -1,28 +1,26 @@
-const {Usuarios} = require("../../db")
+const { Usuarios } = require("../../db"); // Asegúrate de que la ruta es correcta
 
+const deleteClient = async (req) => {
+  try {
+    const { id } = req.params;
 
-const deleteClient= async (req) =>{
+    console.log(`Intentando eliminar el cliente con ID: ${id}`);
 
-    try {
-        let {nombre}= req.query
-        nombre = decodeURIComponent(nombre); // Decodificar la cadena de consulta para que se ponga en automatico el %20 en los espacios 
+    const user = await Usuarios.findOne({ where: { id } });
 
-
-        console.log(nombre);
-        const user= await Usuarios.findOne({where: {nombre}});
-
-        if(!user){
-            return {error: "Usuario no encontrado"};
-        }
-
-        await user.destroy();
-
-        return { message: "Usuario eliminado exitosamente "}
-
-
-    } catch (error) {
-        return {error: error.message}
+    if (!user) {
+      console.log("Usuario no encontrado");
+      return { error: "Usuario no encontrado" };
     }
+
+    await user.destroy();
+    console.log("Usuario eliminado exitosamente");
+
+    return { message: "Usuario eliminado exitosamente" };
+  } catch (error) {
+    console.error("Error al eliminar usuario:", error);
+    return { error: error.message };
+  }
 };
 
 module.exports = deleteClient;

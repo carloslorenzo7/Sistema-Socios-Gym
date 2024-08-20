@@ -32,14 +32,23 @@ const ClientList = ({ clients, isSearching }) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/eliminarCliente/${id}`);
-      setAllClients(allClients.filter((client) => client.id !== id));
-      toast.success("Cliente eliminado con éxito");
+      const response = await axios.delete(`http://localhost:3001/cliente/eliminarCliente/${id}`);
+
+      if (response.status === 200) {
+        console.log(`Cliente con ID ${id} eliminado.`);
+        setAllClients(allClients.filter((client) => client.id !== id));
+        toast.success("Cliente eliminado con éxito");
+      } else {
+        throw new Error("No se pudo eliminar el cliente. Inténtalo de nuevo.");
+      }
     } catch (error) {
-      setError("Error al eliminar cliente");
-      toast.error("Error al eliminar cliente");
+      console.error("Error al eliminar cliente:", error);
+      const errorMessage = error.response?.data?.message || "Error al eliminar cliente";
+      setError(errorMessage);
+      toast.error(errorMessage);
     }
   };
+
 
   if (loading) {
     return <p className="text-center text-xl">Cargando...</p>;
