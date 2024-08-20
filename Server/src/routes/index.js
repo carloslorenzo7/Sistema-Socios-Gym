@@ -13,6 +13,10 @@ const postMembresiasHndls = require("../handlers/membresias/postMembresiasHndls.
 const putMembresiasHndls = require("../handlers/membresias/putMembresiasHndls.js");
 const deleteMembresiasHndls=require("../handlers/membresias/deleteMembresiasHndls");
 const getMembresiasHndls = require("../handlers/membresias/getMembresiasHndls.js");
+const getMonthlyClientsHndls = require("../handlers/estadisticas/getMonthlyClientsHndls.js");
+const test = require("../estadoMembresia/test.js");
+const getInactiveClientsMonthHndls = require("../handlers/estadisticas/getInactiveClientsMonthHndls.js");
+const getActiveClientsHndls= require("../handlers/estadisticas/getActiveClientsHndls.js")
 
 const router = Router();
 
@@ -33,5 +37,14 @@ router.get("/membresias", getMembresiasHndls);
 router.post("/nuevaMembresia", postMembresiasHndls);
 router.put("/modificarMembresia/:idMembresia", putMembresiasHndls);
 router.delete("/eliminarMembresia/:idMembresia", deleteMembresiasHndls)
+
+// estadisticas
+router.get("/estadisticas/clientes-nuevos", getMonthlyClientsHndls);
+router.get("/estadisticas/clientes-vencidos", getInactiveClientsMonthHndls);
+router.get("/estadisticas/clientes-activos",getActiveClientsHndls);
+
+
+//test estado membresia 
+router.get("/estadoMembresia", test)
 
 module.exports = router;

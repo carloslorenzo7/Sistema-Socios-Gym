@@ -14,16 +14,16 @@ const allClients = async () => {
     if (clients.length === 0) {
       return { message: "No se encontraron usuarios" };
     }
-
-    // Actualizar el estado del usuario basado en el estado del último pago
-    clients.forEach(client => {
-      if (client.Pagos && client.Pagos.length > 0) {
-        const ultimoPago = client.Pagos[0];
-        client.estado = ultimoPago.estadoPago; // Actualizar el estado del cliente
-      } else {
-        client.estado = "sin membresia"; // Si no hay pagos, el estado es "sin membresia"
-      }
-    });
+    //! Prueba para ver si se muestra bien el estado de cliente cuando vence membresia 
+    // // Actualizar el estado del usuario basado en el estado del último pago
+    // clients.forEach(client => {
+    //   if (client.Pagos && client.Pagos.length > 0) {
+    //     const ultimoPago = client.Pagos[0];
+    //     client.estado = ultimoPago.estadoPago; // Actualizar el estado del cliente
+    //   } else {
+    //     client.estado = "sin membresia"; // Si no hay pagos, el estado es "sin membresia"
+    //   }
+    // });
 
     return clients;
 

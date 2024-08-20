@@ -20,6 +20,8 @@ const ClientList = ({ clients, isSearching }) => {
       try {
         const response = await axios.get("http://localhost:3001/clientes");
         setAllClients(response.data);
+        console.log(response.data);
+        
       } catch (error) {
         setError("Error al obtener los clientes");
         toast.error("Error al obtener los clientes");
