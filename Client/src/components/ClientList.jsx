@@ -67,7 +67,8 @@ const ClientList = ({ clients, isSearching }) => {
             <tr className="bg-gray-800 text-white uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-left">Id</th>
               <th className="py-3 px-6 text-left">Nombre</th>
-              <th className="py-3 px-6 text-left">Mail</th>
+              <th className="py-3 px-6 text-left">Apellido</th>
+               <th className="py-3 px-6 text-left">Mail</th>
               <th className="py-3 px-6 text-left">Estado</th>
               <th className="py-3 px-6 text-left">Editar</th>
               <th className="py-3 px-6 text-left">Eliminar</th>
@@ -86,6 +87,11 @@ const ClientList = ({ clients, isSearching }) => {
                 <td className="py-3 px-6 text-left text-lg font-medium text-gray-800">
                   <Link to={`/dashboard/cliente/${client.id}`} className="text-black hover:underline">
                     {client.nombre}
+                  </Link>
+                </td>
+                <td className="py-3 px-6 text-left text-lg font-medium text-gray-800">
+                  <Link to={`/dashboard/cliente/${client.id}`} className="text-black hover:underline">
+                    {client.apellido}
                   </Link>
                 </td>
                 <td className="py-3 px-6 text-left text-lg font-medium text-gray-800">
