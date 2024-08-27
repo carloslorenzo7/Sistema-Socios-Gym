@@ -2,6 +2,11 @@ require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
 const{CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY,CLOUDINARY_API_SECRET}= process.env;
 
+console.log('CLOUDINARY_CLOUD_NAME:', CLOUDINARY_CLOUD_NAME);
+console.log('CLOUDINARY_API_KEY:', CLOUDINARY_API_KEY);
+console.log('CLOUDINARY_API_SECRET:', CLOUDINARY_API_SECRET);
+
+
 (async function() {
 
     

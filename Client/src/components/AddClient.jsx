@@ -209,6 +209,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Webcam from "react-webcam";
 
+
 const AddClient = () => {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm();
   const navigate = useNavigate();
@@ -256,6 +257,7 @@ const AddClient = () => {
         .then(res => res.blob())
         .then(blob => {
           const file = new File([blob], "photo.jpg", { type: "image/jpeg" });
+          console.log("Archivo capturado:", file);
           setValue("imagen", [file]); // Asigna el archivo al campo del formulario
           setShowCamera(false); // Cierra la cámara después de tomar la foto
         });

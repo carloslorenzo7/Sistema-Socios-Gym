@@ -17,9 +17,11 @@ const postClient = async (nombre, apellido, email, dni, file) => {
       dni,
       imagen: imageUrl, // guardo la imagen en la base de datos
     });
-
+    console.log("Cliente creado", createClient);
+    
     return createClient;
   } catch (error) {
+    console.error("Error en postClient:", error);
     throw error;
   }
 };

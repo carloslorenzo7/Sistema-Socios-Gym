@@ -34,6 +34,10 @@ module.exports = (sequelize) => {
         allowNull: false, // No permite valores nulos
         unique: true, // Hace que el campo sea único
       },
+      imagen:{
+        type:DataTypes.STRING,
+        allowNull:false
+      },
 
       estado:{
         type:DataTypes.ENUM,
