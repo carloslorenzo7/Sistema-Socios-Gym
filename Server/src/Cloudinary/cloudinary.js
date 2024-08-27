@@ -48,3 +48,5 @@ console.log('CLOUDINARY_API_SECRET:', CLOUDINARY_API_SECRET);
     
     console.log(autoCropUrl);    
 })();
+
+module.exports = cloudinary;
