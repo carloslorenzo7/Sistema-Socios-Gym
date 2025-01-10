@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const ClientDetail = () => {
   const { id } = useParams();
   const [client, setClient] = useState(null);
+  console.log(client);
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -22,6 +24,7 @@ const ClientDetail = () => {
     idMembresia: "",
     estadoPago: "pendiente",  // Default value changed to "pendiente"
   });
+
   const [membresias, setMembresias] = useState([]);
 
   useEffect(() => {
@@ -49,6 +52,8 @@ const ClientDetail = () => {
       try {
         const response = await axios.get("http://localhost:3001/membresias");
         setMembresias(response.data);
+        console.log(response.data);
+        
       } catch (error) {
         toast.error("Error al obtener membresías");
       }
@@ -116,10 +121,10 @@ const ClientDetail = () => {
     return <p className="text-center text-xl text-red-500">{error}</p>;
   }
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0];
-  };
+  // const formatDate = (dateString) => {
+  //   const date = new Date(dateString);
+  //   return date.toISOString().split('T')[0];
+  // };
 
   return (
     <div className="max-w-4xl mx-auto mt-10 bg-white p-8 shadow-md rounded-lg">
@@ -212,10 +217,11 @@ const ClientDetail = () => {
               <li key={pago.idPago} className="border p-4 rounded-lg shadow-sm flex justify-between items-center">
                 <div>
                   <p><strong>Monto:</strong> {pago.monto}</p>
-                  <p><strong>Fecha de pago:</strong> {formatDate(pago.fechaDePago)}</p>
-                  <p><strong>Cuota:</strong> {pago.cuota}</p>
+                  <p><strong>Fecha de pago:</strong> {new Date(pago.fechaDePago).toLocaleDateString()}</p>
+                  <strong>Cuota:</strong>{" "}
+                  {membresias.find((membresia) => membresia.id === pago.idMembresia)?.nombre || "Membresía no encontrada"}
                   <p><strong>Estado de pago:</strong> {pago.estadoPago}</p>
-                  <p><strong>Fecha de vencimiento:</strong> {formatDate(pago.fechaDeVencimiento)}</p>
+                  <p><strong>Fecha de vencimiento:</strong> {new Date(pago.fechaDeVencimiento).toLocaleDateString()}</p>
                 </div>
                 <button
                   onClick={() => handleDeletePayment(pago.idPago)}

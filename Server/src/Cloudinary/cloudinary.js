@@ -2,9 +2,9 @@ require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
 const{CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY,CLOUDINARY_API_SECRET}= process.env;
 
-console.log('CLOUDINARY_CLOUD_NAME:', CLOUDINARY_CLOUD_NAME);
-console.log('CLOUDINARY_API_KEY:', CLOUDINARY_API_KEY);
-console.log('CLOUDINARY_API_SECRET:', CLOUDINARY_API_SECRET);
+// console.log('CLOUDINARY_CLOUD_NAME:', CLOUDINARY_CLOUD_NAME);
+// console.log('CLOUDINARY_API_KEY:', CLOUDINARY_API_KEY);
+// console.log('CLOUDINARY_API_SECRET:', CLOUDINARY_API_SECRET);
 
 
 (async function() {
@@ -28,7 +28,7 @@ console.log('CLOUDINARY_API_SECRET:', CLOUDINARY_API_SECRET);
            console.log(error);
        });
     
-    console.log(uploadResult);
+    //console.log(uploadResult);
     
     // Desoues de subir la imagen, se puede otimizar y transformar las imagenes segun se necesite
     const optimizeUrl = cloudinary.url('shoes', {
@@ -36,7 +36,7 @@ console.log('CLOUDINARY_API_SECRET:', CLOUDINARY_API_SECRET);
         quality: 'auto'
     });
     
-    console.log(optimizeUrl);
+   // console.log(optimizeUrl);
     
     // transforma la iamgen automaticamente para web
     const autoCropUrl = cloudinary.url('shoes', {
@@ -46,7 +46,7 @@ console.log('CLOUDINARY_API_SECRET:', CLOUDINARY_API_SECRET);
         height: 500,
     });
     
-    console.log(autoCropUrl);    
+   // console.log(autoCropUrl);    
 })();
 
 module.exports = cloudinary;

@@ -21,7 +21,9 @@ const Payment = () => {
       const response = await axios.post(
         "http://localhost:3001/clientes/pago",
         data
+        
       );
+      console.log(response);
       toast.success("Pago registrado con éxito");
       navigate("/dashboard");
     } catch (error) {
