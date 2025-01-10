@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
-import { HiOutlineXCircle } from "react-icons/hi";
-import { FaRegUser } from "react-icons/fa";
-import { IoIosAddCircleOutline } from "react-icons/io";
+import { UserIcon, UserPlusIcon, CurrencyDollarIcon, CreditCardIcon, ChartBarIcon, XCircleIcon, Bars3Icon } from '@heroicons/react/24/solid'
 //import ClientList from "../components/ClientList";
 import ClientDetail from "./ClientDetail";
 import AddClient from "../components/AddClient";
@@ -27,7 +25,7 @@ const Dashboard = () => {
 
       <div className="bg-blue-primary text-white w-full flex items-center justify-between p-4 fixed top-0 left-0 z-10">
         <button className="" onClick={toggleSidebar}>
-          {isOpen ? <HiOutlineXCircle /> : '☰'}
+          {isOpen ? <XCircleIcon class="h-6 w-6 text-white" /> : <Bars3Icon class="h-6 w-6 text-white" />}
         </button>
         <div className="text-2xl font-semibold">Sistema de Registro</div>
       </div>
@@ -42,31 +40,31 @@ const Dashboard = () => {
             to="/dashboard/clientes"
             className="block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
           >
-            <p className="flex flex-row items-center gap-3">{<FaRegUser />}Cliente</p>
+            <p className="flex flex-row items-center gap-3">{<UserIcon class="h-6 w-6 text-white" />}Cliente</p>
           </Link>
           <Link
             to="/dashboard/cliente/nuevoCliente"
             className="block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
           >
-            <p className="flex flex-row items-center gap-3">{<IoIosAddCircleOutline />} Nuevo Cliente</p>
+            <p className="flex flex-row items-center gap-3">{<UserPlusIcon class="h-6 w-6 text-white" />} Nuevo Cliente</p>
           </Link>
           <Link
             to="/dashboard/clientes/pago"
             className="block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
           >
-            Nuevo Pago
+            <p className="flex flex-row items-center gap-3">{<CurrencyDollarIcon class="h-6 w-6 text-white" />} Nuevo Pago</p>
           </Link>
           <Link
             to="/dashboard/membresias"
             className="block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
           >
-            Membresías
+            <p className="flex flex-row items-center gap-3">{<CreditCardIcon class="h-6 w-6 text-white" />} Membresías</p>
           </Link>
           <Link
             to="/dashboard/estadisticas"
             className=" block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
           >
-            Estadisticas
+            <p className="flex flex-row items-center gap-3">{<ChartBarIcon class="h-6 w-6 text-white" />} Estadisticas</p>
           </Link>
         </nav>
       </div>
