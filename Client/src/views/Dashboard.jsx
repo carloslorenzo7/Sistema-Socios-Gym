@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
-
+import { UserIcon, UserPlusIcon, CurrencyDollarIcon, CreditCardIcon, ChartBarIcon, XCircleIcon, Bars3Icon } from '@heroicons/react/24/solid'
 //import ClientList from "../components/ClientList";
 import ClientDetail from "./ClientDetail";
 import AddClient from "../components/AddClient";
@@ -21,69 +21,74 @@ const Dashboard = () => {
 
   return (
     <div className="flex h-screen">
-      {/* Navbar */}
-      <div className="bg-blue-900 text-white w-full flex items-center justify-between p-4 fixed top-0 left-0 z-10">
-        <button className="focus:outline-none" onClick={toggleSidebar}>
-          {isOpen ? '✕' : '☰'}
+
+
+      <div className="bg-blue-primary text-white w-full flex items-center justify-between p-4 fixed top-0 left-0 z-10">
+        <button className="" onClick={toggleSidebar}>
+          {isOpen ? <XCircleIcon class="h-6 w-6 text-white" /> : <Bars3Icon class="h-6 w-6 text-white" />}
         </button>
         <div className="text-2xl font-semibold">Sistema de Registro</div>
       </div>
 
       {/* Sidebar */}
-      <div className={`bg-blue-900 text-white ${isOpen ? "w-64" : "hidden"} transition-all duration-300 pt-16 fixed h-full z-10`}>
+      <div className={`bg-blue-900 text-white ${isOpen ? "w-64 mt-16" : "hidden"} transition-all duration-300 pt-16 fixed h-full z-10`}>
+
         <nav className="flex flex-col space-y-4 p-4">
+
+          <img src="/logo.png" className="w-36 mx-auto" alt="" />
           <Link
             to="/dashboard/clientes"
-            className="block p-3 rounded text-white hover:bg-gray-700 transition duration-300"
+            className="block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
           >
-            Clientes
+            <p className="flex flex-row items-center gap-3">{<UserIcon class="h-6 w-6 text-white" />}Cliente</p>
           </Link>
           <Link
             to="/dashboard/cliente/nuevoCliente"
-            className="block p-3 rounded text-white hover:bg-gray-700 transition duration-300"
+            className="block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
           >
-            Nuevo Cliente
+            <p className="flex flex-row items-center gap-3">{<UserPlusIcon class="h-6 w-6 text-white" />} Nuevo Cliente</p>
           </Link>
           <Link
             to="/dashboard/clientes/pago"
-            className="block p-3 rounded text-white hover:bg-gray-700 transition duration-300"
+            className="block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
           >
-            Nuevo Pago
+            <p className="flex flex-row items-center gap-3">{<CurrencyDollarIcon class="h-6 w-6 text-white" />} Nuevo Pago</p>
           </Link>
           <Link
             to="/dashboard/membresias"
-            className="block p-3 rounded text-white hover:bg-gray-700 transition duration-300"
+            className="block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
           >
-            Membresías
+            <p className="flex flex-row items-center gap-3">{<CreditCardIcon class="h-6 w-6 text-white" />} Membresías</p>
           </Link>
           <Link
             to="/dashboard/estadisticas"
-            className=" block p-3 rounded text-white hover:bg-gray-700 transition duration-300"
+            className=" block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
           >
-           Estadisticas
+            <p className="flex flex-row items-center gap-3">{<ChartBarIcon class="h-6 w-6 text-white" />} Estadisticas</p>
           </Link>
         </nav>
       </div>
 
       {/* Vista Central */}
       <div className={`flex-1 p-20 bg-gray-100 ${isOpen ? "ml-64" : "ml-0"} transition-all duration-300 pt-16 min-h-full overflow-y-auto`}>
-        {showSearchBar && (
+
+        {/* {showSearchBar && (
           <div className="mb-4">
-            {/* Componente de búsqueda */}
+            { Componente de búsqueda }
           </div>
-        )}
+        )} */}
 
         <div className="">
-    <Routes>
-      <Route path="/clientes" exact Component={ClientManagement} />
-      <Route path="/cliente/:id" exact Component={ClientDetail} />
-      <Route path="/cliente/nuevoCliente" exact Component={AddClient} />
-      <Route path="/clientes/pago" exact Component={Payment} />
-      <Route path="/membresias" exact Component={Memberships} />
-      <Route path="/estadisticas" exact Component={StadisticsMain} />
-    </Routes>
-  </div>
-        
+          <Routes>
+            <Route path="/clientes" exact Component={ClientManagement} />
+            <Route path="/cliente/:id" exact Component={ClientDetail} />
+            <Route path="/cliente/nuevoCliente" exact Component={AddClient} />
+            <Route path="/clientes/pago" exact Component={Payment} />
+            <Route path="/membresias" exact Component={Memberships} />
+            <Route path="/estadisticas" exact Component={StadisticsMain} />
+          </Routes>
+        </div>
+
       </div>
     </div>
   );

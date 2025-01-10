@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", 
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
@@ -11,6 +11,8 @@ export default {
       colors: {
         'dark-gray': '#171717',
         'input-gray': '#252525',
+        'blue-primary': '#1A1363',
+        'gris-secundary': '#ECE9E9'
       },
       borderRadius: {
         'lg': '25px',

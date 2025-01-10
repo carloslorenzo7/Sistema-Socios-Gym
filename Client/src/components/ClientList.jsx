@@ -21,7 +21,7 @@ const ClientList = ({ clients, isSearching }) => {
         const response = await axios.get("http://localhost:3001/clientes");
         setAllClients(response.data);
         console.log(response.data);
-        
+
       } catch (error) {
         setError("Error al obtener los clientes");
         toast.error("Error al obtener los clientes");
@@ -77,7 +77,7 @@ const ClientList = ({ clients, isSearching }) => {
               <th className="py-3 px-6 text-left">Id</th>
               <th className="py-3 px-6 text-left">Nombre</th>
               <th className="py-3 px-6 text-left">Apellido</th>
-               <th className="py-3 px-6 text-left">Mail</th>
+              <th className="py-3 px-6 text-left">Mail</th>
               <th className="py-3 px-6 text-left">Estado</th>
               <th className="py-3 px-6 text-left">Editar</th>
               <th className="py-3 px-6 text-left">Eliminar</th>
