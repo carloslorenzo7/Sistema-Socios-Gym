@@ -17,7 +17,9 @@ const getMonthlyClientsHndls = require("../handlers/estadisticas/getMonthlyClien
 const test = require("../estadoMembresia/test.js");
 const getInactiveClientsMonthHndls = require("../handlers/estadisticas/getInactiveClientsMonthHndls.js");
 const getActiveClientsHndls= require("../handlers/estadisticas/getActiveClientsHndls.js")
-const upload= require("../Cloudinary/upload.js")
+const upload= require("../Cloudinary/upload.js");
+const ingreso = require("../controllers/ingreso/ingreso.js");
+
 const router = Router();
 
 router.post("/cliente/nuevoCliente",upload.single("imagen"), postClientHndls);
@@ -46,5 +48,8 @@ router.get("/estadisticas/clientes-activos",getActiveClientsHndls);
 
 //test estado membresia 
 router.get("/estadoMembresia", test)
+
+// ingreso de cliente
+router.post("/ingreso",ingreso )
 
 module.exports = router;
