@@ -5,7 +5,6 @@ module.exports = (sequelize) => {
     "Usuarios",
     {
       id: {
-
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -20,7 +19,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      
       email: {
         type: DataTypes.STRING,
         allowNull: false, // No permite valores nulos
@@ -34,16 +32,11 @@ module.exports = (sequelize) => {
         allowNull: false, // No permite valores nulos
         unique: true, // Hace que el campo sea único
       },
-      imagen:{
-        type:DataTypes.STRING,
-        allowNull:false
-      },
-
-      estado:{
-        type:DataTypes.ENUM,
-        values:["activo", "vencido", "sin membresia"],
-        defaultValue:"sin membresia",
-        allowNull:false
+      estado: {
+        type: DataTypes.ENUM,
+        values: ["activo", "vencido", "sin membresia"],
+        defaultValue: "sin membresia",
+        allowNull: false
       }
     },
     {
@@ -51,3 +44,8 @@ module.exports = (sequelize) => {
     }
   );
 };
+
+// imagen:{
+//   type:DataTypes.STRING,
+//   allowNull:false
+// },

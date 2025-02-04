@@ -8,11 +8,11 @@ import {
   FaIdCard,
   FaPaperPlane,
   FaImage,
-  FaCamera,
+  // FaCamera,
 } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Webcam from "react-webcam";
+// import Webcam from "react-webcam";
 
 const AddClient = () => {
   const {
@@ -22,9 +22,9 @@ const AddClient = () => {
     setValue,
   } = useForm();
   const navigate = useNavigate();
-  const webcamRef = useRef(null);
-  const [showCamera, setShowCamera] = useState(false); // Estado para controlar la cámara
-  const [previewUrl, setPreviewUrl] = useState("");
+  // const webcamRef = useRef(null);
+  // const [showCamera, setShowCamera] = useState(false); // Estado para controlar la cámara
+  // const [previewUrl, setPreviewUrl] = useState("");
 
   const onSubmit = async (data) => {
     try {
@@ -34,9 +34,9 @@ const AddClient = () => {
       formData.append("email", data.email);
       formData.append("dni", data.dni);
 
-      if (data.imagen && data.imagen[0]) {
-        formData.append("imagen", data.imagen[0]);
-      }
+      // if (data.imagen && data.imagen[0]) {
+      //   formData.append("imagen", data.imagen[0]);
+      // }
 
       const response = await axios.post(
         "http://localhost:3001/cliente/nuevoCliente",
@@ -59,33 +59,33 @@ const AddClient = () => {
     }
   };
 
-  const handleShowCamera = () => {
-    setShowCamera(!showCamera); // Alterna la visibilidad de la cámara
-  };
+  // const handleShowCamera = () => {
+  //   setShowCamera(!showCamera); // Alterna la visibilidad de la cámara
+  // };
 
-  const capture = useCallback(() => {
-    if (webcamRef.current) {
-      const imageSrc = webcamRef.current.getScreenshot();
-      fetch(imageSrc)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const file = new File([blob], "photo.jpg", { type: "image/jpeg" });
-          console.log("Archivo capturado:", file);
-          setValue("imagen", [file]); // Asigna el archivo al campo del formulario
-          setPreviewUrl(imageSrc); // Usar la URL del objeto directamente
-          setShowCamera(false); // Cierra la cámara después de tomar la foto
-        });
-    }
-  }, [webcamRef, setValue]);
+  // const capture = useCallback(() => {
+  //   if (webcamRef.current) {
+  //     const imageSrc = webcamRef.current.getScreenshot();
+  //     fetch(imageSrc)
+  //       .then((res) => res.blob())
+  //       .then((blob) => {
+  //         const file = new File([blob], "photo.jpg", { type: "image/jpeg" });
+  //         console.log("Archivo capturado:", file);
+  //         setValue("imagen", [file]); // Asigna el archivo al campo del formulario
+  //         setPreviewUrl(imageSrc); // Usar la URL del objeto directamente
+  //         setShowCamera(false); // Cierra la cámara después de tomar la foto
+  //       });
+  //   }
+  // }, [webcamRef, setValue]);
 
   // handler para previsualizar la iamgen en form
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setValue("imagen", [file]);
-      setPreviewUrl(URL.createObjectURL(file)); // se etablece la url del objeto
-    }
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setValue("imagen", [file]);
+  //     setPreviewUrl(URL.createObjectURL(file)); // se etablece la url del objeto
+  //   }
+  // };
 
   return (
     <div className="max-w-md mx-auto mt-10 bg-white p-8 shadow-md rounded-lg">
@@ -166,7 +166,7 @@ const AddClient = () => {
             <span className="text-red-500 text-sm">{errors.dni.message}</span>
           )}
         </div>
-        <div>
+        {/* <div>
           <label className="block text-gray-700 font-medium mb-2">
             <FaImage className="mr-2" /> Imagen
           </label>
@@ -218,7 +218,7 @@ const AddClient = () => {
               />
             </div>
           )}
-        </div>
+        </div> */}
         <button
           type="submit"
           className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-300 flex items-center justify-center"

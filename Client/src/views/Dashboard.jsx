@@ -4,7 +4,7 @@ import { UserIcon, UserPlusIcon, CurrencyDollarIcon, CreditCardIcon, ChartBarIco
 //import ClientList from "../components/ClientList";
 import ClientDetail from "./ClientDetail";
 import AddClient from "../components/AddClient";
-import Payment from "../components/Payment";
+// import Payment from "../components/Payment";
 //import SearchClientName from "../components/SearchClientName";
 import Memberships from "../components/Memberships";
 import ClientManagement from "../components/ClientManagement";
@@ -48,12 +48,12 @@ const Dashboard = () => {
           >
             <p className="flex flex-row items-center gap-3">{<UserPlusIcon class="h-6 w-6 text-white" />} Nuevo Cliente</p>
           </Link>
-          <Link
+          {/* <Link
             to="/dashboard/clientes/pago"
             className="block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
           >
             <p className="flex flex-row items-center gap-3">{<CurrencyDollarIcon class="h-6 w-6 text-white" />} Nuevo Pago</p>
-          </Link>
+          </Link> */}
           <Link
             to="/dashboard/membresias"
             className="block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
@@ -83,7 +83,7 @@ const Dashboard = () => {
             <Route path="/clientes" exact Component={ClientManagement} />
             <Route path="/cliente/:id" exact Component={ClientDetail} />
             <Route path="/cliente/nuevoCliente" exact Component={AddClient} />
-            <Route path="/clientes/pago" exact Component={Payment} />
+            {/* <Route path="/clientes/pago" exact Component={Payment} /> */}
             <Route path="/membresias" exact Component={Memberships} />
             <Route path="/estadisticas" exact Component={StadisticsMain} />
           </Routes>
