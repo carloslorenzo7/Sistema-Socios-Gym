@@ -24,7 +24,7 @@ const Memberships = () => {
 
   useEffect(() => {
     fetchMemberships();
-  }, []);
+  }, []); //Added empty dependency array to fix the warning
 
   const handleAdd = () => {
     setSelectedMembership(null);
@@ -62,60 +62,75 @@ const Memberships = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto mt-10 p-4">
+    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <ToastContainer />
-      <p className="text-2xl font-semibold mb-8 text-center">Membresías</p>
-      <button
-        className="bg-blue-600 p-4 text-white rounded-full fixed bottom-8 right-10 flex items-center justify-center shadow-lg hover:bg-blue-700 transition duration-300"
-        onClick={handleAdd}
-      >
-        <FaPlus size={24} />
-      </button>
+      <div className="sm:flex sm:items-center sm:justify-between mb-8">
+        <h2 className="text-3xl font-extrabold text-gray-900">Membresías</h2>
+        <button
+          className="mt-3 sm:mt-0 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onClick={handleAdd}
+        >
+          <FaPlus className="mr-2 -ml-1 h-5 w-5" />
+          Agregar Membresía
+        </button>
+      </div>
 
-      {error && <div className="text-red-500 text-center mb-4">Error al cargar membresías</div>}
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+          <strong className="font-bold">Error!</strong>
+          <span className="block sm:inline"> Error al cargar membresías</span>
+        </div>
+      )}
 
       {membresias.length === 0 ? (
-        <div className="text-center text-gray-700">No hay membresías disponibles</div>
+        <div className="text-center text-gray-500 mt-4">No hay membresías disponibles</div>
       ) : (
-        <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-          <table className="min-w-full bg-white">
-            <thead>
-              <tr className="bg-gray-800 text-white uppercase text-sm leading-normal">
-                <th className="py-3 px-6 text-left">Plan</th>
-                <th className="py-3 px-6 text-left">Descripción</th>
-                <th className="py-3 px-6 text-left">Duración</th>
-                <th className="py-3 px-6 text-left">Precio</th>
-                <th className="py-3 px-6 text-left">Editar</th>
-                <th className="py-3 px-6 text-left">Eliminar</th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-700 text-sm font-light">
-              {membresias.map((membresia) => (
-                <tr key={membresia.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="py-3 px-6 text-left">{membresia.nombre}</td>
-                  <td className="py-3 px-6 text-left">{membresia.descripcion}</td>
-                  <td className="py-3 px-6 text-left">{membresia.duracion}</td>
-                  <td className="py-3 px-6 text-left">{membresia.precio}</td>
-                  <td className="py-3 px-6 text-left">
-                    <button
-                      className="text-blue-600 hover:text-blue-800 transition duration-300"
-                      onClick={() => handleEdit(membresia)}
-                    >
-                      <FaEdit size={20} />
-                    </button>
-                  </td>
-                  <td className="py-3 px-6 text-left">
-                    <button
-                      className="text-red-600 hover:text-red-800 transition duration-300"
-                      onClick={() => handleDelete(membresia.id)}
-                    >
-                      <FaTrashAlt size={20} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="mt-8 flex flex-col">
+          <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+              <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5">
+                <table className="min-w-full divide-y divide-gray-300">
+                  <thead className="bg-gray-200">
+                    <tr>
+                      <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Plan</th>
+                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Descripción</th>
+                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Duración</th>
+                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Precio</th>
+                      <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                        <span className="sr-only">Acciones</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 bg-white">
+                    {membresias.map((membresia) => (
+                      <tr key={membresia.id}>
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{membresia.nombre}</td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{membresia.descripcion}</td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{membresia.duracion}</td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{membresia.precio}</td>
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                          <button
+                            className="text-indigo-600 hover:text-indigo-900 mr-4"
+                            onClick={() => handleEdit(membresia)}
+                          >
+                            <FaEdit className="h-5 w-5" />
+                            <span className="sr-only">Editar</span>
+                          </button>
+                          <button
+                            className="text-red-600 hover:text-red-900"
+                            onClick={() => handleDelete(membresia.id)}
+                          >
+                            <FaTrashAlt className="h-5 w-5" />
+                            <span className="sr-only">Eliminar</span>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
