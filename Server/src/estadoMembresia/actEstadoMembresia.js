@@ -17,13 +17,27 @@ const actEstadoMembresia = async () => {
     //itero sobre los usuarios en busqueda de los pagos
 
     for (const usuario of usuarios) {
-      const tienePagoActivo = usuario.Pagos.some((pago) =>
-        moment().isBefore(pago.fechaDeVencimiento)
-      );
+      const tienePagoActivo = usuario.Pagos.some((pago) =>{
 
-      usuario.estado = tienePagoActivo ? "activo" : "vencido";
-      await usuario.save();
-      console.log(`Usuario ${usuario.id} actualizado a ${usuario.estado}`);
+        const fechaVencimiento= new Date (pago.fechaDeVencimiento);
+        const fechaActual = new Date(); // fecha y hora actuales 
+        console.log("fecha acutal:",fechaActual)
+        console.log("fecha vencimiento:",fechaVencimiento)
+        let fechas=fechaActual <= fechaVencimiento; // comparo si aun no vence
+        console.log("fechas: ",fechas);
+        
+        return fechas;
+      });
+      
+
+      const nuevoEstado = tienePagoActivo ? "activo" : "vencido";
+      if(usuario.estado != nuevoEstado){
+        usuario.estado = nuevoEstado
+        await usuario.save();
+        console.log(`Usuario ${usuario.id} actualizado a ${usuario.estado}`);
+      } else{
+        console.log(`Usuario ${usuario.id} ya estaba en estado ${usuario.estado}`);
+      }
     };
   } catch (error) {
     console.error("Error actualizando estados de membresía:", error);
