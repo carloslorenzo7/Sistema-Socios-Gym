@@ -23,8 +23,8 @@ const Ingreso = () => {
     } catch (error) {
       setMessage("❌ Acceso denegado.");
     }
-
     setDni(""); // Limpia el input después del envío
+
     inputRef.current?.focus(); // Vuelve a enfocar el input
   };
 
@@ -36,6 +36,7 @@ const Ingreso = () => {
           <input
             ref={inputRef}
             type="text" 
+            value={dni}  
             onChange={(e) => setDni(e.target.value)}
             placeholder="Escanea tu DNI"
             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

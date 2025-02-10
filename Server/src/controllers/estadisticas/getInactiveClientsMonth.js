@@ -24,7 +24,7 @@ const getInactiveClientsMonth= async()=>{
                         fechaDeVencimiento:{
                             [Op.between]:[fechaInicio, fechaFin],
                             // Compruebo si han pasado más de 30 días desde la fecha de vencimiento
-                            [Op.lt]: moment().subtract(30, "days").toDate()
+                            [Op.lt]: moment().toDate()
                         },
                         estadoPago:"pagado"
                     }

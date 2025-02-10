@@ -2,43 +2,44 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import moment from "moment-timezone";
 
 const ClientDetail = () => {
   const { id } = useParams();
   const [client, setClient] = useState(null);
   console.log(client);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     nombre: "",
-    apellido:"",
+    apellido: "",
     email: "",
-    dni: ""
+    dni: "",
   });
   const [isAddingPayment, setIsAddingPayment] = useState(false);
   const [paymentData, setPaymentData] = useState({
     fechaDePago: "",
     idMembresia: "",
-    estadoPago: "pendiente",  // Default value changed to "pendiente"
+    estadoPago: "pagado", // Default value changed to "ppagado"
   });
 
   const [membresias, setMembresias] = useState([]);
 
   useEffect(() => {
     const fetchClient = async () => {
-      setLoading(true);  // Reiniciar el estado de carga cada vez que cambia el ID
-      setError(null);    // Reiniciar el estado de error cada vez que cambia el ID
+      setLoading(true); // Reiniciar el estado de carga cada vez que cambia el ID
+      setError(null); // Reiniciar el estado de error cada vez que cambia el ID
       try {
         const response = await axios.get(`http://localhost:3001/cliente/${id}`);
         setClient(response.data);
         setFormData({
           nombre: response.data.nombre,
-          apellido:response.data.apellido,
+          apellido: response.data.apellido,
           email: response.data.email,
-          dni: response.data.dni
+          dni: response.data.dni,
         });
         setLoading(false);
       } catch (error) {
@@ -53,7 +54,6 @@ const ClientDetail = () => {
         const response = await axios.get("http://localhost:3001/membresias");
         setMembresias(response.data);
         console.log(response.data);
-        
       } catch (error) {
         toast.error("Error al obtener membresías");
       }
@@ -78,7 +78,7 @@ const ClientDetail = () => {
     try {
       await axios.put(`http://localhost:3001/cliente/actualizarCliente`, {
         id,
-        ...formData
+        ...formData,
       });
       setClient({ ...client, ...formData });
       setIsEditing(false);
@@ -93,7 +93,7 @@ const ClientDetail = () => {
     try {
       const response = await axios.post(`http://localhost:3001/clientes/pago`, {
         idUsuario: id,
-        ...paymentData
+        ...paymentData,
       });
       setClient({ ...client, Pagos: [...client.Pagos, response.data.pago] });
       setIsAddingPayment(false);
@@ -105,8 +105,13 @@ const ClientDetail = () => {
 
   const handleDeletePayment = async (idPago) => {
     try {
-      await axios.delete(`http://localhost:3001/cliente/pago/eliminarPago/${idPago}`);
-      setClient({ ...client, Pagos: client.Pagos.filter((pago) => pago.idPago !== idPago) });
+      await axios.delete(
+        `http://localhost:3001/cliente/pago/eliminarPago/${idPago}`
+      );
+      setClient({
+        ...client,
+        Pagos: client.Pagos.filter((pago) => pago.idPago !== idPago),
+      });
       toast.success("Pago eliminado con éxito");
     } catch (error) {
       toast.error("Error al eliminar pago");
@@ -129,11 +134,15 @@ const ClientDetail = () => {
   return (
     <div className="max-w-4xl mx-auto mt-10 bg-white p-8 shadow-md rounded-lg">
       <ToastContainer />
-      <h2 className="text-2xl font-semibold mb-6 text-center">Detalle de Cliente</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-center">
+        Detalle de Cliente
+      </h2>
       {isEditing ? (
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Nombre:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Nombre:
+            </label>
             <input
               type="text"
               name="nombre"
@@ -144,7 +153,9 @@ const ClientDetail = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Apellido:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Apellido:
+            </label>
             <input
               type="text"
               name="apellido"
@@ -155,7 +166,9 @@ const ClientDetail = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Email:
+            </label>
             <input
               type="email"
               name="email"
@@ -166,7 +179,9 @@ const ClientDetail = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">DNI:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              DNI:
+            </label>
             <input
               type="text"
               name="dni"
@@ -195,11 +210,33 @@ const ClientDetail = () => {
       ) : (
         <>
           <ul className="space-y-4">
-            <li><strong>Nombre:</strong> {client.nombre}</li>
-            <li><strong>Apellido:</strong> {client.apellido}</li>
-            <li><strong>Email:</strong> {client.email}</li>
-            <li><strong>DNI:</strong> {client.dni}</li>
-            <li><strong>Estado:</strong> {client.estado}</li>
+            <li>
+              <strong>Nombre:</strong> {client.nombre}
+            </li>
+            <li>
+              <strong>Apellido:</strong> {client.apellido}
+            </li>
+            <li>
+              <strong>Email:</strong> {client.email}
+            </li>
+            <li>
+              <strong>DNI:</strong> {client.dni}
+            </li>
+            <li>
+              <strong>Estado:</strong> {client.estado}
+            </li>
+            <li>
+              <strong>Registro:</strong>{" "}
+              {moment(client.createdAt)
+                .tz("America/Argentina/Buenos_Aires")
+                .format("DD/MM/YYYY HH:mm:ss")}
+            </li>
+            <li>
+              <strong>Actualizacion:</strong>{" "}
+              {moment(client.updatedAt)
+                .tz("America/Argentina/Buenos_Aires")
+                .format("DD/MM/YYYY HH:mm:ss")}
+            </li>
           </ul>
           <button
             onClick={() => setIsEditing(true)}
@@ -212,26 +249,42 @@ const ClientDetail = () => {
       <h3 className="text-xl font-semibold mt-6">Pagos</h3>
       <ul className="mt-4 space-y-4">
         {client.Pagos && client.Pagos.length > 0 ? (
-          client.Pagos.map((pago) => (
-            pago && (
-              <li key={pago.idPago} className="border p-4 rounded-lg shadow-sm flex justify-between items-center">
-                <div>
-                  <p><strong>Monto:</strong> {pago.monto}</p>
-                  <p><strong>Fecha de pago:</strong> {new Date(pago.fechaDePago).toLocaleDateString()}</p>
-                  <strong>Cuota:</strong>{" "}
-                  {membresias.find((membresia) => membresia.id === pago.idMembresia)?.nombre || "Membresía no encontrada"}
-                  <p><strong>Estado de pago:</strong> {pago.estadoPago}</p>
-                  <p><strong>Fecha de vencimiento:</strong> {new Date(pago.fechaDeVencimiento).toLocaleDateString()}</p>
-                </div>
-                <button
-                  onClick={() => handleDeletePayment(pago.idPago)}
-                  className="ml-4 px-4 py-2 bg-red-500 text-white rounded-md shadow-sm"
+          client.Pagos.map(
+            (pago) =>
+              pago && (
+                <li
+                  key={pago.idPago}
+                  className="border p-4 rounded-lg shadow-sm flex justify-between items-center"
                 >
-                  Eliminar
-                </button>
-              </li>
-            )
-          ))
+                  <div>
+                    <p>
+                      <strong>Monto:</strong> {pago.monto}
+                    </p>
+                    <p>
+                      <strong>Fecha de pago:</strong>{" "}
+                      {new Date(pago.fechaDePago).toLocaleDateString()}
+                    </p>
+                    <strong>Cuota:</strong>{" "}
+                    {membresias.find(
+                      (membresia) => membresia.id === pago.idMembresia
+                    )?.nombre || "Membresía no encontrada"}
+                    <p>
+                      <strong>Estado de pago:</strong> {pago.estadoPago}
+                    </p>
+                    <p>
+                      <strong>Fecha de vencimiento:</strong>{" "}
+                      {new Date(pago.fechaDeVencimiento).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => handleDeletePayment(pago.idPago)}
+                    className="ml-4 px-4 py-2 bg-red-500 text-white rounded-md shadow-sm"
+                  >
+                    Eliminar
+                  </button>
+                </li>
+              )
+          )
         ) : (
           <p className="text-center text-gray-500">No hay pagos disponibles.</p>
         )}
@@ -245,7 +298,9 @@ const ClientDetail = () => {
       {isAddingPayment && (
         <form onSubmit={handleAddPayment} className="mt-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Fecha de Pago:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Fecha de Pago:
+            </label>
             <input
               type="date"
               name="fechaDePago"
@@ -256,7 +311,9 @@ const ClientDetail = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Tipo de Membresía:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Tipo de Membresía:
+            </label>
             <select
               name="idMembresia"
               value={paymentData.idMembresia}
@@ -272,8 +329,10 @@ const ClientDetail = () => {
               ))}
             </select>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Estado de Pago:</label>
+          {/* <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Estado de Pago:
+            </label>
             <select
               name="estadoPago"
               value={paymentData.estadoPago}
@@ -285,7 +344,7 @@ const ClientDetail = () => {
               <option value="pagado">Pagado</option>
               <option value="cancelado">Cancelado</option>
             </select>
-          </div>
+          </div> */}
           <div className="flex justify-end space-x-4">
             <button
               type="button"

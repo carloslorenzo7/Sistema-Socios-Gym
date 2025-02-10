@@ -14,7 +14,7 @@ function App() {
 
         <Route path="/" exact Component={Landing} />
         <Route path="/dashboard/*" exact Component={Dashboard} />
-        <Route path="/ingreso"exact Component={Ingreso}/>
+        <Route path="/ingreso"exact Component={Ingreso} />
 
       </Routes>
 

@@ -14,6 +14,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import Webcam from "react-webcam";
 
+
 const AddClient = () => {
   const {
     register,
@@ -102,6 +103,10 @@ const AddClient = () => {
             type="text"
             {...register("nombre", {
               required: "El campo nombre es obligatorio",
+              pattern: {
+                value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/,
+                message: "El nombre solo debe contener letras y espacios"
+              },
             })}
             className="w-full p-2 border border-gray-300 rounded-md"
           />
@@ -119,6 +124,10 @@ const AddClient = () => {
             type="text"
             {...register("apellido", {
               required: "El campo apellido es obligatorio",
+              pattern: {
+                value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/,
+                message: "El apellido solo debe contener letras y espacios"
+              },
             })}
             className="w-full p-2 border border-gray-300 rounded-md"
           />
@@ -156,8 +165,8 @@ const AddClient = () => {
             {...register("dni", {
               required: "El campo DNI es obligatorio",
               pattern: {
-                value: /^[0-9]+$/,
-                message: "El DNI debe contener solo números",
+                value: /^[0-9]{8}$/,
+                message: "El DNI debe contener solo números y 8 digitos",
               },
             })}
             className="w-full p-2 border border-gray-300 rounded-md"

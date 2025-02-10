@@ -35,7 +35,7 @@ const Dashboard = () => {
 
         <nav className="flex flex-col space-y-4 p-4">
 
-          <img src="/logo.png" className="w-36 mx-auto" alt="" />
+          <img src="/fitness.webp" className="w-48 mx-auto mt-10 mb-10" alt="" />
           <Link
             to="/dashboard/clientes"
             className="block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
