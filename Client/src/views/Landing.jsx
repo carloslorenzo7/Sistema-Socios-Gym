@@ -33,14 +33,14 @@ const Landing = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-800">
+    <div className="flex min-h-screen items-center justify-center bg-neutral-300">
       
 
-      <form className="flex flex-col p-10 bg-dark-gray rounded-lg shadow-outer-light w-full max-w-md transition-transform transform duration-500 ease-in-out hover:scale-105 hover:border hover:border-black"
+      <form className="flex flex-col p-10 bg-white rounded-lg shadow-outer-light w-full max-w-md "
       
       onSubmit={handleSubmit(onSubmit)}>
 
-      <h1 className=" mb-4 text-4xl font-bold text-center text-white">Bienvenido</h1>
+      <h1 className=" mb-4 text-4xl font-bold text-center text-black">Bienvenido</h1>
 
 
         <div className="mb-4 relative">
@@ -48,7 +48,7 @@ const Landing = () => {
 
 
           
-          <label className="block text-gray-300 font-bold">Email</label>
+          <label className="block text-gray-500 font-bold">Email</label>
           <input
             type="email"
             {...register("email", {
@@ -61,13 +61,13 @@ const Landing = () => {
                 message: "No tiene formato valido de correo electronico"
               },
             })}
-            className="mt-1 p-2 pl-10 bg-input-gray border-none outline-none text-white rounded-lg w-full shadow-inner-deep"
+             className="mt-1 p-2 bg-white border border-gray-300 outline-none text-black rounded-lg w-full"
           />
           {errors.email && <span className="text-red-600 h-4 block font-semibold">{errors.email.message}</span>}
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-300 font-bold">Contraseña</label>
+          <label className="block text-gray-500 font-bold">Contraseña</label>
           <input
             type="password"
             {...register("password", {
@@ -79,7 +79,7 @@ const Landing = () => {
                 value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&;])[A-Za-z\d@$!%*?&;]{8,}$/,
                 message:"La contraseña debe tener mayusculas, minusculas, un numero, un simbolo y minimo 8 caracteres"              },
             })}
-            className="mt-1 p-2 pl-10 bg-input-gray border-none outline-none text-white rounded-lg w-full shadow-inner-deep"
+             className="mt-1 p-2 bg-white border border-gray-300 outline-none text-black rounded-lg w-full"
           />
           {errors.password && <span className="text-red-600 font-semibold">{errors.password.message}</span>}
         </div>

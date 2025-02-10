@@ -14,9 +14,13 @@ const ingreso = async (req,res) => {
     if (usuario.estado !== "activo") {
       return res.status(404).json("acceso denegado, cliente no activo");
     }
+
+    return res.status(202).json("Usuario activo")
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
+
+
 };
 
 module.exports = ingreso;

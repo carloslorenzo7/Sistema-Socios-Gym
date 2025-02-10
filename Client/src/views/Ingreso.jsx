@@ -1,49 +1,55 @@
-import { useState } from "react";
-import axios from "axios"
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 const Ingreso = () => {
   const [dni, setDni] = useState("");
   const [message, setMessage] = useState("");
+  const inputRef = useRef(null);
+
+  // Enfoca el input automáticamente al entrar a la vista
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("...Verificando");
+    if (!dni) return;
+
+    setMessage("Verificando...");
 
     try {
-        await axios.post("http://localhost:3001/ingreso", { dni });
-      setMessage("Acceso permitido, bienvenido");
+      await axios.post("http://localhost:3001/ingreso", { dni });
+      setMessage("✅ Acceso permitido, bienvenido.");
     } catch (error) {
-      if (error.response) {
-        setMessage(error.response.data);
-      } else {
-        setMessage("Hubo un error al procesar la solicitud");
-      }
+      setMessage("❌ Acceso denegado.");
     }
+
+    setDni(""); // Limpia el input después del envío
+    inputRef.current?.focus(); // Vuelve a enfocar el input
   };
 
   return (
-  <div className="max-w-lg mx-auto mt-10 bg-white p-8 shadow-md rounded-lg text-center">
-    <form onSubmit={handleSubmit}>
-        <div>
-        <label htmlFor="dni" className="flex flex-auto text-gray-700 font-medium mb-2  items-center"></label>
-        <input
-        type="text"
-        id="dni"
-        value={dni}
-        onChange={(e) => setDni(e.target.value)}
-        placeholder="Ingresa tu dni"
-        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        </div>
-        <div className= "flex justify-center space-x-4">
-            <button type="submit" className=
-            "px-4 py-2 mt-6 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 flex items-center"
-          
-            >Verificar</button>
-        </div>
-    </form>
-    {message && <p style={{ marginTop: "16px", color: "#333" }}>{message}</p>}
-  </div>
-  
+    <div className="flex justify-center items-center min-h-screen bg-gray-200">
+      <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+        <h2 className="text-lg font-bold mb-4">Ingreso de Clientes</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            ref={inputRef}
+            type="text" 
+            onChange={(e) => setDni(e.target.value)}
+            placeholder="Escanea tu DNI"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button 
+            type="submit"
+            className="w-full mt-3 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+          >
+            Verificar
+          </button>
+        </form>
+        {message && <p className="mt-4">{message}</p>}
+      </div>
+    </div>
   );
 };
 

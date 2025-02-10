@@ -28,7 +28,18 @@ const postPago = async (req) => {
     }
 
     // Calcular la fecha de vencimiento usando la duración de la membresía
-    const fechaDeVencimiento = fechaPagoDate.clone().add(membresia.duracion, "days");
+    // const fechaDeVencimiento = fechaPagoDate.clone().add(membresia.duracion, "days");
+
+
+    let fechaDeVencimiento;
+
+      if(membresia.duracion >=28 && membresia.duracion <=31){
+        fechaDeVencimiento = fechaPagoDate.clone().add(1, "months");
+      } else {
+        fechaDeVencimiento = fechaPagoDate.clone().add(membresia.duracion, "days");
+      }
+    
+
 
     // Convertir a UTC antes de guardar en la base de datos
     const fechaPagoUtc = fechaPagoDate.clone().utc().format();

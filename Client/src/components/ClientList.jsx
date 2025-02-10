@@ -127,7 +127,7 @@ const ClientList = ({ clients, isSearching }) => {
                     {client.id}
                   </Link>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                   <Link
                     to={`/dashboard/cliente/${client.id}`}
                     className="hover:text-blue-600 transition-colors duration-200"
@@ -135,7 +135,7 @@ const ClientList = ({ clients, isSearching }) => {
                     {client.nombre}
                   </Link>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                   <Link
                     to={`/dashboard/cliente/${client.id}`}
                     className="hover:text-blue-600 transition-colors duration-200"
@@ -143,7 +143,7 @@ const ClientList = ({ clients, isSearching }) => {
                     {client.apellido}
                   </Link>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                   <Link
                     to={`/dashboard/cliente/${client.id}`}
                     className="hover:text-blue-600 transition-colors duration-200"
@@ -166,9 +166,16 @@ const ClientList = ({ clients, isSearching }) => {
                     <span className="px-2 inline-flex text-sm leading-5 font-bold uppercase rounded-full bg-green-100 text-green-800">
                       Activo
                     </span>
-                  ) : (
-                    <span className="px-2 inline-flex text-sm leading-5 font-bold uppercase rounded-full bg-red-100 text-red-800">
+                  ) :client.estado ==='vencido' ?(
+                    <span>
+                      <span className="px-2 inline-flex text-sm leading-5 font-bold uppercase rounded-full bg-red-100 text-red-800">
                       Vencido
+                    </span>
+                    </span>
+
+                  ):(
+                    <span className="px-2 inline-flex text-sm leading-5 font-bold uppercase rounded-full bg-gray-100 text-gray-500">
+                      sin membresia
                     </span>
                   )}
                 </td>
