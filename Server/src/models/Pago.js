@@ -43,6 +43,11 @@ module.exports = (sequelize) => {
         type: DataTypes.DATE,
         allowNull: false,
       },
+      tipoDePago: {
+        type: DataTypes.ENUM,
+        values: ["efectivo", "transferencia"],
+        allowNull: false,
+      },
     },
     {
       timestamps: true,

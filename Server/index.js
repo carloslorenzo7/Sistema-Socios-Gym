@@ -6,20 +6,20 @@
 const express = require('express');
 const { conn } = require('./src/db'); // Importar la conexión a la base de datos desde db.js
 const server = require('./src/server'); // Importar el servidor Express desde server.js
- require("./src/estadoMembresia/tareaProgramada")
+require("./src/estadoMembresia/tareaProgramada")
 
-require ('dotenv').config() // Cargar variables de entorno desde .env
+require('dotenv').config() // Cargar variables de entorno desde .env
 
 // Extraer el puerto del archivo .env o utilizar uno predeterminado
-const {PORT} = process.env;
+const { PORT } = process.env;
 
 // Sincronizar la conexión a la base de datos
-conn.sync({ force: false}) .then(() => {
-    // Iniciar el servidor
-    server.listen(PORT, () => {
-      console.log(`Server listening on port ${PORT}`);
-    });
-  })
+conn.sync({ force: false }).then(() => {
+  // Iniciar el servidor
+  server.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
+})
   .catch((error) => {
     console.error('Error syncing database:', error);
   });

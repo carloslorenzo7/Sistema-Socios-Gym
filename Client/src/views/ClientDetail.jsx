@@ -23,7 +23,8 @@ const ClientDetail = () => {
   const [paymentData, setPaymentData] = useState({
     fechaDePago: "",
     idMembresia: "",
-    estadoPago: "pagado", // Default value changed to "ppagado"
+    estadoPago: "pagado",
+    tipoDePago: "efectivo",
   });
 
   const [membresias, setMembresias] = useState([]);
@@ -272,6 +273,9 @@ const ClientDetail = () => {
                       <strong>Estado de pago:</strong> {pago.estadoPago}
                     </p>
                     <p>
+                      <strong>Tipo de Pago:</strong> {pago.tipoDePago}
+                    </p>
+                    <p>
                       <strong>Fecha de vencimiento:</strong>{" "}
                       {new Date(pago.fechaDeVencimiento).toLocaleDateString()}
                     </p>
@@ -327,6 +331,21 @@ const ClientDetail = () => {
                   {membresia.nombre}
                 </option>
               ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Tipo de Pago:
+            </label>
+            <select
+              name="tipoDePago"
+              value={paymentData.tipoDePago}
+              onChange={handlePaymentChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="efectivo">Efectivo</option>
+              <option value="transferencia">Transferencia</option>
             </select>
           </div>
           {/* <div>
