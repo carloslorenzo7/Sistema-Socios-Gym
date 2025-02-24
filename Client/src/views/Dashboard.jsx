@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
-import { UserIcon, UserPlusIcon, CurrencyDollarIcon, CreditCardIcon, ChartBarIcon, XCircleIcon, Bars3Icon } from '@heroicons/react/24/solid'
+import { UserIcon, UserPlusIcon, CreditCardIcon, ChartBarIcon, XCircleIcon, Bars3Icon } from '@heroicons/react/24/solid'
+import { CgInsertAfterO } from "react-icons/cg";
 //import ClientList from "../components/ClientList";
 import ClientDetail from "./ClientDetail";
 import AddClient from "../components/AddClient";
@@ -9,6 +10,8 @@ import AddClient from "../components/AddClient";
 import Memberships from "../components/Memberships";
 import ClientManagement from "../components/ClientManagement";
 import StadisticsMain from "../components/stadistics/StadisticsMain";
+import Ingreso from "../../src/views/Ingreso";
+
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -66,6 +69,12 @@ const Dashboard = () => {
           >
             <p className="flex flex-row items-center gap-3">{<ChartBarIcon class="h-6 w-6 text-white" />} Estadisticas</p>
           </Link>
+          <Link
+            to="/dashboard/ingreso"
+            className=" block p-3 rounded text-white hover:bg-gris-secundary hover:text-blue-800 hover:font-bold transition duration-300"
+          >
+            <p className="flex flex-row items-center gap-3">{<CgInsertAfterO  class="h-6 w-6 text-white" />} Ingreso</p>
+          </Link>
         </nav>
       </div>
 
@@ -77,6 +86,7 @@ const Dashboard = () => {
             { Componente de búsqueda }
           </div>
         )} */}
+        
 
         <div className="">
           <Routes>
@@ -86,6 +96,8 @@ const Dashboard = () => {
             {/* <Route path="/clientes/pago" exact Component={Payment} /> */}
             <Route path="/membresias" exact Component={Memberships} />
             <Route path="/estadisticas" exact Component={StadisticsMain} />
+             <Route path="/ingreso"exact Component={Ingreso} />
+             
           </Routes>
         </div>
 

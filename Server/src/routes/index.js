@@ -29,6 +29,7 @@ router.put("/cliente/actualizarCliente", putClientHndls);
 router.delete("/cliente/eliminarCliente/:id", deleteClientHdnls);
 router.get("/cliente/:id", getClientIDHndls);
 
+
 // pagos
 router.post("/clientes/pago", postPagoHndls);
 router.put("/cliente/actualizarPago/:idPago", putPagoHndls);

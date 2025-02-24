@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SearchClientName from "./SearchClientName";
 import ClientList from "./ClientList";
+
 
 const ClientManagement = () => {
     const [searchedClients, setSearchedClients] = useState([]);
