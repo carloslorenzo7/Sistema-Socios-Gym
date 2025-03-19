@@ -17,12 +17,12 @@ const getMonthlyClientsHndls = require("../handlers/estadisticas/getMonthlyClien
 const test = require("../estadoMembresia/test.js");
 const getInactiveClientsMonthHndls = require("../handlers/estadisticas/getInactiveClientsMonthHndls.js");
 const getActiveClientsHndls= require("../handlers/estadisticas/getActiveClientsHndls.js")
-const upload= require("../Cloudinary/upload.js");
+//const upload= require("../Cloudinary/upload.js");
 const ingreso = require("../controllers/ingreso/ingreso.js");
 
 const router = Router();
-
-router.post("/cliente/nuevoCliente",upload.single("imagen"), postClientHndls);
+//upload.single("imagen")
+router.post("/cliente/nuevoCliente", postClientHndls);
 router.get("/clientes", getAllClientsHndls);
 router.get("/cliente/nombre", getClientNameHndls);
 router.put("/cliente/actualizarCliente", putClientHndls);

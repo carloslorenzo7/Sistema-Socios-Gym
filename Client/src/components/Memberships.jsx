@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import { FaPlus, FaEdit, FaTrashAlt } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+const apiUrl = import.meta.env.VITE_BACK_URL;
 
 const Memberships = () => {
   const [membresias, setMembresias] = useState([]);
@@ -14,7 +15,7 @@ const Memberships = () => {
 
   const fetchMemberships = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/membresias");
+      const response = await axios.get(`${apiUrl}/membresias`);
       setMembresias(response.data);
     } catch (error) {
       setError(true);
@@ -48,7 +49,7 @@ const Memberships = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/eliminarMembresia/${id}`);
+      await axios.delete(`${apiUrl}/eliminarMembresia/${id}`);
       setMembresias(membresias.filter((membresia) => membresia.id !== id));
       toast.success("Membresía eliminada con éxito");
     } catch (error) {

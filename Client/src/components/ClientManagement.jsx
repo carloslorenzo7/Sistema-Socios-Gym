@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import ClientList from "./ClientList";
 import FilterStatusClient from "./filterStatusClient";
 import SearchClientName from "./SearchClientName";
-
+const apiUrl = import.meta.env.VITE_BACK_URL;
 
 const ClientManagement = () =>{
     const [allClients, setAllClients] = useState([]) // Lista completa de clientes
@@ -18,7 +18,7 @@ const ClientManagement = () =>{
     useEffect(() => {
         const fetchClients = async () => {
           try {
-            const response = await axios.get("http://localhost:3001/clientes")
+            const response = await axios.get(`${apiUrl}/clientes`)
             setAllClients(response.data)
             setFilteredClients(response.data) // Mostrar todos los clientes al inicio
           } catch (error) {
@@ -52,7 +52,7 @@ const ClientManagement = () =>{
     
       const handleDelete = async (id) => {
         try {
-          const response = await axios.delete(`http://localhost:3001/cliente/eliminarCliente/${id}`)
+          const response = await axios.delete(`${apiUrl}/cliente/eliminarCliente/${id}`)
     
           if (response.status === 200) {
             setAllClients(allClients.filter((client) => client.id !== id))

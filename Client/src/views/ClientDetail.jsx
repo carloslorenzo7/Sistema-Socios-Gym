@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment-timezone";
+const apiUrl = import.meta.env.VITE_BACK_URL;
 
 const ClientDetail = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ const ClientDetail = () => {
       setLoading(true); // Reiniciar el estado de carga cada vez que cambia el ID
       setError(null); // Reiniciar el estado de error cada vez que cambia el ID
       try {
-        const response = await axios.get(`http://localhost:3001/cliente/${id}`);
+        const response = await axios.get(`${apiUrl}/cliente/${id}`);
         setClient(response.data);
         setFormData({
           nombre: response.data.nombre,
@@ -52,7 +53,7 @@ const ClientDetail = () => {
 
     const fetchMembresias = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/membresias");
+        const response = await axios.get(`${apiUrl}/membresias`);
         setMembresias(response.data);
         console.log(response.data);
       } catch (error) {
@@ -77,7 +78,7 @@ const ClientDetail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3001/cliente/actualizarCliente`, {
+      await axios.put(`${apiUrl}/cliente/actualizarCliente`, {
         id,
         ...formData,
       });
@@ -92,7 +93,7 @@ const ClientDetail = () => {
   const handleAddPayment = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:3001/clientes/pago`, {
+      const response = await axios.post(`${apiUrl}/clientes/pago`, {
         idUsuario: id,
         ...paymentData,
       });
@@ -107,7 +108,7 @@ const ClientDetail = () => {
   const handleDeletePayment = async (idPago) => {
     try {
       await axios.delete(
-        `http://localhost:3001/cliente/pago/eliminarPago/${idPago}`
+        `${apiUrl}/cliente/pago/eliminarPago/${idPago}`
       );
       setClient({
         ...client,

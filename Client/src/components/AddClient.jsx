@@ -13,6 +13,7 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import Webcam from "react-webcam";
+const apiUrl = import.meta.env.VITE_BACK_URL;
 
 
 const AddClient = () => {
@@ -40,7 +41,7 @@ const AddClient = () => {
       // }
 
       const response = await axios.post(
-        "http://localhost:3001/cliente/nuevoCliente",
+       `${apiUrl}/cliente/nuevoCliente`,
         formData,
         {
           headers: {

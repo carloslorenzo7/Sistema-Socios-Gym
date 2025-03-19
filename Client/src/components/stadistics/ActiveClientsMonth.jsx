@@ -1,6 +1,7 @@
 import { BarChart, ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip, Legend ,Bar } from "recharts";
 import { useEffect ,useState } from "react";
 import axios from "axios"
+const apiUrl = import.meta.env.VITE_BACK_URL;
 
 const Stadistics= () =>{
 
@@ -10,7 +11,7 @@ const Stadistics= () =>{
     const axiosClient= async() =>{
         try {
             
-            const response= await axios.get("http://localhost:3001/estadisticas/clientes-activos");
+            const response= await axios.get(`${apiUrl}/estadisticas/clientes-activos`);
 
             const clients= response.data
             console.log("Datos recibidos", clients);

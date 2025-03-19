@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { FaUser, FaInfoCircle, FaCalendarAlt, FaDollarSign } from "react-icons/fa";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+const apiUrl = import.meta.env.VITE_BACK_URL;
 
 const MembershipForm = ({ membership, onSave, onClose }) => {
   const {
@@ -27,7 +28,7 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
     if (membership) {
       try {
         const response = await axios.put(
-          `http://localhost:3001/modificarMembresia/${membership.id}`,
+          `${apiUrl}/modificarMembresia/${membership.id}`,
           data
         );
         toast.success("Membresía actualizada correctamente");
@@ -42,7 +43,7 @@ const MembershipForm = ({ membership, onSave, onClose }) => {
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:3001/nuevaMembresia",
+          `${apiUrl}/nuevaMembresia`,
           data
         );
         toast.success("Membresía agregada con éxito");

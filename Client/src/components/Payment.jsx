@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FaCalendarAlt, FaMoneyBillWave, FaPercentage, FaCreditCard, FaInfoCircle, FaPaperPlane } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+const apiUrl = import.meta.env.VITE_BACK_URL;
 
 const Payment = () => {
   const {
@@ -19,7 +20,7 @@ const Payment = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/clientes/pago",
+        `${apiUrl}/clientes/pago`,
         data
         
       );

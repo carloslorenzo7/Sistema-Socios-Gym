@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_BACK_URL;
+
+
 const Ingreso = () => {
   const [dni, setDni] = useState("");
   const [message, setMessage] = useState("");
@@ -18,7 +21,7 @@ const Ingreso = () => {
     setMessage("Verificando...");
 
     try {
-      await axios.post("http://localhost:3001/ingreso", { dni });
+      await axios.post(`${apiUrl}/ingreso`, { dni });
       setMessage("✅ Acceso permitido, bienvenido.");
     } catch (error) {
       setMessage("❌ Acceso denegado.");

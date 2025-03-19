@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+const apiUrl = import.meta.env.VITE_BACK_URL;
+
 
 const EditUser = () => {
     const { id } = useParams();
@@ -19,7 +21,7 @@ const EditUser = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/cliente/${id}`);
+                const response = await axios.get(`${apiUrl}/cliente/${id}`);
                 setUser(response.data);
                 setLoading(false);
             } catch (error) {
@@ -42,7 +44,7 @@ const EditUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:3001/cliente/${id}`, user);
+            await axios.put(`${apiUrl}/cliente/${id}`, user);
             toast.success("Usuario actualizado con éxito");
             navigate("/dashboard/clientes");
         } catch (error) {

@@ -1,6 +1,7 @@
 import { BarChart, ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip, Legend ,Bar } from "recharts";
 import { useEffect ,useState } from "react";
 import axios from "axios"
+const apiUrl = import.meta.env.VITE_BACK_URL;
 //?ReponsiveContainer: va a ser el contenedor 
 //? BarChart: va a ser el tipo de grafico, en este caso de barras
 //? CartesianGrid : matriz de trazos y guiones
@@ -19,7 +20,7 @@ const Stadistics = () => {
     
         const axiosClient= async() =>{
             try {
-                const response= await axios.get("http://localhost:3001/estadisticas/clientes-nuevos")
+                const response= await axios.get(`${apiUrl}/estadisticas/clientes-nuevos`)
                 const clients= response.data
                 console.log("Datos recibidos:", clients); 
 
