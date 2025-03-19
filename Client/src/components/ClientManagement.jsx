@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import ClientList from "./ClientList";
-import FilterStatusClient from "./filterStatusClient";
+import FilterStatusClient from "./FilterStatusClient";
 import SearchClientName from "./SearchClientName";
 const apiUrl = import.meta.env.VITE_BACK_URL;
 
