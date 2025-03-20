@@ -24,13 +24,14 @@ const Stadistics = () => {
                 const clients= response.data
                 console.log("Datos recibidos:", clients); 
 
-                const formattedData = Object.keys(clients).map(month => ({
+                const formattedData = Object.keys(clients || {}).map(month => ({
                   name: month,
                  "clientes-nuevos": clients[month]
                 }));
                 setData(formattedData);
                 
             } catch (error) {
+              setData([]);
               console.error("Error al obtener clientes:", error);
             }
         }
