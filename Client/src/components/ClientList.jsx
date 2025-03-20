@@ -12,6 +12,10 @@ const ClientList = ({ filteredClients, handleDelete, loading, error }) => {
   if (error) {
     return <p className="text-center text-xl text-red-500">{error}</p>;
   }
+  
+  if (filteredClients.length === 0) {
+    return <p className="text-center text-xl text-gray-600">No hay clientes disponibles.</p>;
+  }
 
   return (
     <div className="overflow-x-auto bg-white shadow-md ">
@@ -66,10 +70,10 @@ const ClientList = ({ filteredClients, handleDelete, loading, error }) => {
 };
 
 ClientList.propTypes = {
-  filteredClients: PropTypes.func.isRequired,
+  filteredClients: PropTypes.array.isRequired, 
   handleDelete: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired,
-  error: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired, 
+  error: PropTypes.string, 
 };
 
 export default ClientList;

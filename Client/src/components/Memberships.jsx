@@ -16,10 +16,18 @@ const Memberships = () => {
   const fetchMemberships = async () => {
     try {
       const response = await axios.get(`${apiUrl}/membresias`);
-      setMembresias(response.data);
+      // Asegurarnos de que response.data sea un array
+      const membresiasData = Array.isArray(response.data) ? response.data : [];
+      setMembresias(membresiasData);
+      // Si no es un array, mostramos un mensaje de error
+      if (!Array.isArray(response.data)) {
+        setError(response.data.message || "No se encontraron membresías");
+        toast.error(response.data.message || "No se encontraron membresías");
+      }
     } catch (error) {
-      setError(true);
-      toast.error("Error al cargar membresías");
+      setMembresias([]); // Asegurarnos de que sea un array vacío
+      setError("Error al conectar con el servidor");
+      toast.error("Error al conectar con el servidor");
     }
   };
 

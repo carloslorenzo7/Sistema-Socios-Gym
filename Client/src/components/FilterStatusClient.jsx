@@ -16,7 +16,7 @@ const FilterStatusClient = ({ filterState, setFilterState }) => {
   };
 
   FilterStatusClient.propTypes = {
-    filterState: PropTypes.func.isRequired,
+    filterState: PropTypes.string.isRequired,
     setFilterState: PropTypes.func.isRequired,
   };
   
