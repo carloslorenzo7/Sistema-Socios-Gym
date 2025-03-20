@@ -13,8 +13,8 @@ const SearchClientName = ({ searchTerm, setSearchTerm }) => {
 };
 
 SearchClientName.propTypes = {
-  searchTerm: PropTypes.func.isRequired,
-  setSearchTerm: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string.isRequired, // ✅ Debe ser un string
+  setSearchTerm: PropTypes.func.isRequired, // ✅ Debe ser una función
 };
 
 export default SearchClientName;
