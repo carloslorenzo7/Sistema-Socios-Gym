@@ -29,23 +29,15 @@ const AddClient = () => {
   // const [previewUrl, setPreviewUrl] = useState("");
 
   const onSubmit = async (data) => {
+    console.log(data); // Verifica los datos antes de enviarlos al backend
+
     try {
-      const formData = new FormData();
-      formData.append("nombre", data.nombre);
-      formData.append("apellido", data.apellido);
-      formData.append("email", data.email);
-      formData.append("dni", data.dni);
-
-      // if (data.imagen && data.imagen[0]) {
-      //   formData.append("imagen", data.imagen[0]);
-      // }
-
       const response = await axios.post(
-       `${apiUrl}/cliente/nuevoCliente`,
-        formData,
+        `${apiUrl}/cliente/nuevoCliente`,
+        data, // Enviamos los datos como un objeto JSON
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json", // Asegúrate de que el backend reciba JSON
           },
         }
       );
@@ -54,12 +46,10 @@ const AddClient = () => {
       navigate(`/dashboard/cliente/${response.data.id}`);
     } catch (error) {
       toast.error("Error al crear el cliente");
-      console.error(
-        "Error al crear el cliente:",
-        error.response?.data || error.message
-      );
+      console.error("Error al crear el cliente:", error.response?.data || error.message);
     }
   };
+
 
   // const handleShowCamera = () => {
   //   setShowCamera(!showCamera); // Alterna la visibilidad de la cámara
